@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/Header";
+import MatchList from "./components/MatchList";
+import Footer from "./components/Footer";
+import useMatches from "./hooks/useMatches";
+import useBackgroundImage from "./hooks/useBackgroundImage";
+import "./App.css";
 
-function App() {
+const App: React.FC = () => {
+  const { backgroundImageUrl } = useBackgroundImage();
+  const { matches, selectedMonth, selectedYear, setMonth, setYear } = useMatches();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
+      <Header selectedMonth={selectedMonth} selectedYear={selectedYear} setMonth={setMonth} setYear={setYear} />
+      <main className="content">
+        <MatchList matches={matches} />
+      </main>
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;

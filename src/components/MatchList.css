@@ -1,0 +1,12 @@
+.match-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .match-list {
+      gap: 10px;
+    }
+  }
+  

@@ -1,0 +1,66 @@
+/* src/components/Footer.css */
+.footer {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    align-items: center;
+    bottom: 10px;
+    height: 160px;
+    width: 560px;
+    text-shadow: rgba(0, 0, 0, 0.25) 1px 2px 0px;
+}
+
+@font-face {
+    font-family: 'DIN Web W07 Cond Black';
+    src: local('DIN Web W07 Cond Black'), url(../../public/DIN\ Web\ W07\ Cond\ Black.ttf) format('woff');
+  }
+
+@font-face {
+    font-family: 'DIN Web W07 Italic';
+    src: local('DIN Web W07 Italic'), url(../../public/DIN\ Web\ W07\ Italic.ttf) format('woff');
+  }
+
+.footer-background {
+    background-color: #fff;
+    width: 560px;
+    height: 65%;
+    z-index: -1;
+    position: absolute;
+    align-items: center;
+}
+
+.footer-background-green {
+    background-color: #0B704A;
+    width: 560px;
+    height: 10%;
+    position: absolute;
+    align-items: center;
+}
+
+.footer-logo img {
+    margin-left: 25px;
+    height: 140px;
+    margin-right: 10px;
+}
+.footer-text {
+    font-size: 0.1rem;
+}
+
+.footer-text-minde {  
+    margin-top: -10px;  
+    font-size: 2rem;
+    font-family: 'DIN Web W07 Cond Black';
+    color: #0B704A;
+}
+.footer-text-flavor {    
+    font-size: 1.2rem;
+    font-family: 'DIN Web W07 Cond Black';
+    color: #0B704A;
+}
+
+.footer-text-random {  
+    font-size: .8rem;
+    font-family: 'DIN Web W07 Italic';
+    color: #000000;
+}
+

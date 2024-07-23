@@ -1,0 +1,104 @@
+/* src/components/header.css */
+.header {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    align-items: center;
+    top: 10px;
+    height: 150px;
+    width: 560px;
+    text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
+}
+
+@font-face {
+    font-family: 'DIN Web W07 Cond Black';
+    src: local('DIN Web W07 Cond Black'), url(../../public/DIN\ Web\ W07\ Cond\ Black.ttf) format('woff');
+  }
+
+  @font-face {
+    font-family: 'DIN Web W07 Black';
+    src: local('DIN Web W07 Black'), url(../../public/DIN\ Web\ W07\ Black.ttf) format('woff');
+  }
+
+  @font-face {
+    font-family: 'DIN Web W07 Italic';
+    src: local('DIN Web W07 Italic'), url(../../public/DIN\ Web\ W07\ Italic.ttf) format('woff');
+  }
+
+.header-background {
+    background-color: #21B46B;
+    width: 270px;
+    height: 82px;
+    z-index: -1;
+    position: absolute;
+    align-items: center;
+}
+
+.header-background-green {
+    background-color: #0B704A;
+    width: 560px;
+    height: 10%;
+    position: absolute;
+    align-items: center;
+}
+
+.header-logo img {
+    margin-left: 25px;
+    height: 140px;
+    margin-right: 10px;
+}
+.header-text {
+    color: #fff;
+    font-family: 'DIN Web W07 Cond Black';
+    width: 120px;
+    margin-right: 15px;
+    font-size: 1.5rem;
+}
+
+.header-selectors {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background-color: #0B704A;
+    height: 100%;
+}
+
+.header-month-text { 
+    appearance: none; /* Remove default styling in modern browsers */
+    -webkit-appearance: none; /* Safari and Chrome */
+    -moz-appearance: none; /* Firefox */
+    background: none; /* Remove default background */
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+    font-size: 1em; /* Adjust font size */
+    font-family: inherit; /* Inherit font-family */
+    color: inherit; /* Inherit color */
+    cursor: pointer; /* Pointer cursor on hover */ 
+    font-size: 50px;
+    padding-left: 10px;
+    height: 100%;
+    font-family: 'DIN Web W07 Black';
+    color: #fff;
+    background-color: #0B704A;
+    text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
+}
+
+.header-month {  
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0B704A;
+}
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 82px;
+}
