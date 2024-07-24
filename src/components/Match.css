@@ -3,7 +3,7 @@
   display: grid;
   width: 400px;
   height: 85px;
-  margin: 10px 0;
+  margin: 5px 0; /* Adjust margin as needed */
   grid-template-columns: 1fr 7fr 1fr;
   grid-template-rows: 1fr 1fr;
   text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
