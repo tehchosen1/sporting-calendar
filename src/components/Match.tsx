@@ -10,7 +10,25 @@ interface MatchProps {
   field: string;
 }
 
-const Match: React.FC<MatchProps> = ({ day, team_name, time, extraInfo, teamLogo, field }) => {
+const getMatchFieldDisplay = (field: string) => {
+  switch (field) {
+    case "(C)":
+      return "casa";
+    case "(F)":
+      return "fora";
+    default:
+      return "neutro";
+  }
+};
+
+const Match: React.FC<MatchProps> = ({
+  day,
+  team_name,
+  time,
+  extraInfo,
+  teamLogo,
+  field,
+}) => {
   return (
     <div className="match">
       <div className="match-day">{day}</div>
@@ -25,7 +43,9 @@ const Match: React.FC<MatchProps> = ({ day, team_name, time, extraInfo, teamLogo
         <div className="match-type">{extraInfo.toUpperCase()}</div>
       </div>
       <div className="match-field">
-        <div className="match-field-text">{field.toUpperCase()}</div>
+        <div className="match-field-text">
+          {getMatchFieldDisplay(field).toUpperCase()}
+        </div>
       </div>
     </div>
   );

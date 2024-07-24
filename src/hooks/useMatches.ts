@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import fetchMatchesForMonthYear, { MatchInfo } from "../components/utils/scrapeSportingMatches";
+import fetchMatchesForMonthYear, {
+  MatchInfo,
+} from "../components/utils/scrapeSportingMatches";
 
 const useMatches = () => {
   const [matches, setMatches] = useState<MatchInfo[]>([]);
@@ -8,29 +10,40 @@ const useMatches = () => {
 
   useEffect(() => {
     const key = `${selectedYear}-${selectedMonth.toString().padStart(2, "0")}`;
-  
+
     const loadMatchesFromLocalStorage = () => {
       if (typeof window !== "undefined") {
         const localStorageData = localStorage.getItem(key);
         if (localStorageData) {
-          setMatches(JSON.parse(localStorageData).reverse());
+          setMatches(JSON.parse(localStorageData));
         }
       }
     };
-  
+
     const fetchMatches = async () => {
-      const scrapedMatches = await fetchMatchesForMonthYear(selectedMonth, selectedYear);
-      setMatches(scrapedMatches.reverse());
+      const scrapedMatches = await fetchMatchesForMonthYear(
+        selectedMonth,
+        selectedYear
+      );
+      // Reverse here to ensure the order is correct before saving to state and localStorage
+      const matchesInCorrectOrder = scrapedMatches;
+      setMatches(matchesInCorrectOrder);
       if (typeof window !== "undefined") {
-        localStorage.setItem(key, JSON.stringify(scrapedMatches));
+        localStorage.setItem(key, JSON.stringify(matchesInCorrectOrder));
       }
     };
-  
+
     loadMatchesFromLocalStorage();
     fetchMatches();
   }, [selectedMonth, selectedYear]);
 
-  return { matches, selectedMonth, selectedYear, setMonth: setSelectedMonth, setYear: setSelectedYear };
+  return {
+    matches,
+    selectedMonth,
+    selectedYear,
+    setMonth: setSelectedMonth,
+    setYear: setSelectedYear,
+  };
 };
 
 export default useMatches;
