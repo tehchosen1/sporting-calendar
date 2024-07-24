@@ -8,11 +8,20 @@ import "./App.css";
 
 const App: React.FC = () => {
   const { backgroundImageUrl } = useBackgroundImage();
-  const { matches, selectedMonth, selectedYear, setMonth, setYear } = useMatches();
+  const { matches, selectedMonth, selectedYear, setMonth, setYear } =
+    useMatches();
 
   return (
-    <div className="App" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
-      <Header selectedMonth={selectedMonth} selectedYear={selectedYear} setMonth={setMonth} setYear={setYear} />
+    <div
+      className="App"
+      style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+    >
+      <Header
+        selectedMonth={selectedMonth}
+        selectedYear={selectedYear}
+        setMonth={setMonth}
+        setYear={setYear}
+      />
       <main className="content">
         <MatchList matches={matches} />
       </main>

@@ -1,28 +1,36 @@
-/* src/App.css */
-#root {
-  background-color: rgba(0,0,0,1);
+/* Global styles */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
+
+#root {
+  background-color: rgba(0, 0, 0, 1);
+}
+
 .App {
-  background: url("https://scpconteudos.pt/sites/default/files/jl7_1002_1.jpg") center center / cover no-repeat;
-  background-color: rgba(0,0,0,.5);
+  background: url("../public/jl7_1002_1.jpg") top center / cover no-repeat;
+  background-attachment: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
   display: flex;
   margin: 0 auto;
   z-index: 0;
   flex-direction: column;
-  height: 100vh;
-  width: 560px;
-}
-.content {
-  flex: 1;
-  margin-bottom: 145px;
-  margin-top: 145px;
-  display: flex;
-  align-items: center;
-  justify-content: left;
+  min-height: 100vh; /* Updated for full viewport height */
+  width: 100%;
+  overflow: hidden;
 }
 
-.matches {
+.content {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  margin: auto;
+  width: 560px;
 }

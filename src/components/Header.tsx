@@ -8,7 +8,12 @@ interface HeaderProps {
   setYear: (year: number) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ selectedMonth, selectedYear, setMonth, setYear }) => {
+const Header: React.FC<HeaderProps> = ({
+  selectedMonth,
+  selectedYear,
+  setMonth,
+  setYear,
+}) => {
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setMonth(parseInt(event.target.value));
   };
@@ -39,24 +44,21 @@ const Header: React.FC<HeaderProps> = ({ selectedMonth, selectedYear, setMonth, 
 
   return (
     <header className="header">
-      <div className="header-background"></div>
-      <div className="header-logo">
-        <img src="../../icon_emblema.svg" alt="Núcleo Sporting" />
-      </div>
       <div className="header-wrapper">
-        <div className="header-text">
-          <div className="header-text-flavor">
-            CALENDÁRIO <br />DE JOGOS
-          </div>
+        <div className="header-logo">
+          <img src="../../icon_emblema.svg" alt="Logo" />
         </div>
-        <div className="header-selectors">
-          <select
-            className="header-month-text"
-            value={selectedMonth}
-            onChange={handleMonthChange}
-          >
-            {renderOptionsForMonth()}
-          </select>
+        <div className="header-right-wrapper">
+          <div className="header-text">Calendário de Jogos</div>
+          <div className="header-month-selector">
+            <select
+              className="header-month-text"
+              value={selectedMonth}
+              onChange={handleMonthChange}
+            >
+              {renderOptionsForMonth()}
+            </select>
+          </div>
         </div>
       </div>
     </header>

@@ -1,87 +1,131 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
+import axios from "axios";
+import cheerio from "cheerio";
+const { CookieJar } = require("tough-cookie");
 
-// Interface for match information
-interface MatchInfo {
-    date: string;
-    time: string;
-    field: string;
-    teamIcon: string;
-    teamName: string;
-    leagueIcon: string;
-    leagueName: string;
-    result: string;
+export interface MatchInfo {
+  date: string;
+  time: string;
+  field: string;
+  teamIcon: string;
+  teamName: string;
+  leagueIcon: string;
+  leagueName: string;
+  result: string;
 }
 
-// Base URLs
-const BASE_URL = 'https://cors-anywhere.herokuapp.com/';
-const BASE_NOPROXY_URL = 'https://www.zerozero.pt';
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+const BASE_URL = `${CORS_PROXY}https://www.zerozero.pt`;
+const BASE_NOPROXY_URL = "https://www.zerozero.pt";
+const TEAM_URL = `${BASE_URL}/equipa/sporting/jogos?grp=0&equipa_1=16&menu=allmatches`;
+const SPORTING_URL = `${CORS_PROXY}https://www.sporting.pt/pt/futebol/equipa-principal/plantel`;
+const SPORTING_BASE_URL = `${CORS_PROXY}https://www.sporting.pt/`;
+const cookieJar = new CookieJar();
+let clearCache = false;
 
-// Get current month and year
-function getCurrentMonthYear(): { month: number, year: number } {
-    const date = new Date();
-    return {
-        month: date.getMonth() + 1,
-        year: date.getFullYear()
-    };
-}
+export const getCurrentMonthYear = () => {
+  const now = new Date();
+  return {
+    currentMonth: now.getMonth() + 1,
+    currentYear: now.getFullYear(),
+  };
+};
 
-// Generate a key for caching purposes
-function generateMonthYearKey(month: number, year: number): string {
-    return `${year}-${month.toString().padStart(2, '0')}`;
-}
+export const generateMonthYearKey = (month: number, year: number): string =>
+  `${year}-${month.toString().padStart(2, "0")}`;
 
-// Fetch matches for a given month and year
-async function fetchMatchesForMonthYear(month: number = getCurrentMonthYear().month, year: number = getCurrentMonthYear().year): Promise<MatchInfo[]> {
-    const key = generateMonthYearKey(month, year);
-    const cachedData = localStorage.getItem(key);
+export const fetchMatchesForMonthYear = async (
+  month: number = getCurrentMonthYear().currentMonth,
+  year: number = getCurrentMonthYear().currentYear
+): Promise<MatchInfo[]> => {
+  const key = generateMonthYearKey(month, year);
+  if (localStorage.getItem("cleaned") !== "true") {
+    localStorage.clear();
+    clearCache = true;
+    localStorage.setItem("cleaned", "true");
+  }
+  const localStorageData =
+    typeof window !== "undefined" ? localStorage.getItem(key) : null;
 
-    if (cachedData) {
-        const matches = JSON.parse(cachedData) as MatchInfo[];
-        if (matches.length > 0) {
-            return matches;
-        }
+  if (localStorageData) {
+    const cachedData = JSON.parse(localStorageData);
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1;
+    const currentYear = now.getFullYear();
+    if (
+      month !== currentMonth ||
+      year !== currentYear ||
+      cachedData.length === 0
+    ) {
+      return await fetchDataFromServer(month, year, key);
     }
+    return cachedData;
+  } else {
+    return await fetchDataFromServer(month, year, key);
+  }
+};
 
-    const matches = await fetchDataFromServer(month, year);
-    if (matches.length > 0) {
-        localStorage.setItem(key, JSON.stringify(matches));
-    }
-
-    return matches;
-}
-
-// Fetch data from server and parse it
-async function fetchDataFromServer(month: number, year: number): Promise<MatchInfo[]> {
-    const url = `${BASE_URL}https://www.zerozero.pt/equipa/sporting/jogos`;
-    const response = await axios.get(url);
+async function fetchDataFromServer(
+  month: number,
+  year: number,
+  key: string
+): Promise<MatchInfo[]> {
+  try {
+    const response = await axios.get(TEAM_URL, {
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+      },
+      withCredentials: false,
+    });
     const $ = cheerio.load(response.data);
+
     const matches: MatchInfo[] = [];
-
-    // Assuming the structure of the HTML contains a certain class or id
-    $('.classOrIdForMatches').each((_, element) => {
-        const date = $(element).find('.classOrIdForDate').text().trim();
-        const time = $(element).find('.classOrIdForTime').text().trim();
-        const field = $(element).find('.classOrIdForField').text().trim();
-        const teamIcon = $(element).find('.classOrIdForTeamIcon').attr('src') || '';
-        const teamName = $(element).find('.classOrIdForTeamName').text().trim();
-        const leagueIcon = $(element).find('.classOrIdForLeagueIcon').attr('src') || '';
-        const leagueName = $(element).find('.classOrIdForLeagueName').text().trim();
-        const result = $(element).find('.classOrIdForResult').text().trim();
-
-        const matchDate = new Date(date);
-        if (matchDate.getMonth() + 1 === month && matchDate.getFullYear() === year) {
-            matches.push({ date, time, field, teamIcon, teamName, leagueIcon, leagueName, result });
-        }
+    $("#team_games .stats tr.parent").each((_, element) => {
+      const dateText = $(element).find("td.double").eq(0).text().trim();
+      const date = new Date(dateText);
+      if (date.getMonth() + 1 === month && date.getFullYear() === year) {
+        const matchInfo: MatchInfo = {
+          date: dateText,
+          time: $(element).find("td").eq(2).text().trim(),
+          field: $(element).find("td").eq(3).text().trim(),
+          teamIcon:
+            BASE_NOPROXY_URL +
+            ($(element).find("td a img").attr("src")?.trim() || ""),
+          teamName: $(element).find("td.text a").eq(0).text().trim(),
+          leagueIcon:
+            BASE_URL +
+            ($(element).find("td img").eq(1).attr("src")?.trim() || ""),
+          leagueName: $(element)
+            .find("td .micrologo_and_text .text a")
+            .eq(0)
+            .text()
+            .trim(),
+          result: $(element).find(".result").text().trim() || "",
+        };
+        matches.push(matchInfo);
+      }
     });
 
+    if (typeof window !== "undefined") {
+      localStorage.setItem(key, JSON.stringify(matches));
+    }
+
     return matches.reverse();
+  } catch (error) {
+    console.error("Error fetching matches:", error);
+    return [];
+  }
 }
 
-// Scrape a random Sporting CP player image
-async function scrapePlayerImage(): Promise<string | null> {
+export const scrapePlayerImage = async () => {
   try {
-    const { data } = await axios.get(`${BASE_URL}https://www.sporting.pt/pt/futebol/equipa-principal/plantel`);
+    const { data } = await axios.get(SPORTING_URL, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+      },
+    });
     const $ = cheerio.load(data);
     let playerItems: string[] = [];
 
@@ -98,24 +142,27 @@ async function scrapePlayerImage(): Promise<string | null> {
 
     const randomIndex = Math.floor(Math.random() * playerItems.length);
     const playerPageUrl = playerItems[randomIndex];
-    const playerPageResponse = await axios.get(`${BASE_URL}https://www.sporting.pt/` + playerPageUrl, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+    const playerPageResponse = await axios.get(
+      SPORTING_BASE_URL + playerPageUrl,
+      {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+        },
+      }
+    );
     const $$ = cheerio.load(playerPageResponse.data);
-    const playerImageUrl = $$("div.player__photo").css("background-image")?.replace(/url\("?(.+?)"?\)/, "$1") || "";
+    const playerImageUrl =
+      $$("div.player__photo")
+        .css("background-image")
+        ?.replace(/url\("?(.+?)"?\)/, "$1") || "";
 
     return playerImageUrl;
   } catch (error) {
     console.error("Failed to scrape player image:", error);
     return null;
   }
-}
-
-// Export functions
-export {
-    MatchInfo,
-    getCurrentMonthYear,
-    generateMonthYearKey,
-    fetchMatchesForMonthYear,
-    fetchDataFromServer,
-    scrapePlayerImage
 };
+
 export default fetchMatchesForMonthYear;
