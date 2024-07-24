@@ -1,7 +1,7 @@
 /* src/components/Match.css */
 .match {
   display: grid;
-  width: 400px;
+  width: 370px;
   height: 85px;
   margin: 5px 0; /* Adjust margin as needed */
   grid-template-columns: 1fr 7fr 1fr;
@@ -126,7 +126,7 @@
 
 @media (max-width: 560px) {
   .match {
-    width: 60%; /* Adjust width to be responsive */
+    width: 55%; /* Adjust width to be responsive */
     height: 15%; /* Let the height adjust automatically */
     margin: 5px 0; /* Adjust margin as needed */
     grid-template-columns: 1fr 5fr 1fr; /* Adjust column widths if necessary */
@@ -141,11 +141,11 @@
 
   .match-description {
     padding-left: 5px; /* Adjust padding */
-    font-size: 14px; /* Adjust font size */
+    font-size: 2em; /* Adjust font size */
   }
 
   .match-team {
-    font-size: 24px; /* Adjust font size */
+    font-size: 1.1em; /* Adjust font size */
   }
 
   .team-logo {

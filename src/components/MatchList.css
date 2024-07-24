@@ -15,7 +15,7 @@
 }
 
 @media (max-width: 768px) {
-  .match-list {
+  .match-list {gap: 10px;
     margin-bottom: 0px;
     padding-bottom: 0px;
     overflow: scroll;
