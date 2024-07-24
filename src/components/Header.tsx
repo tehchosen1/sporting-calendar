@@ -8,18 +8,9 @@ interface HeaderProps {
   setYear: (year: number) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
-  selectedMonth,
-  selectedYear,
-  setMonth,
-  setYear,
-}) => {
+const Header: React.FC<HeaderProps> = ({ selectedMonth, setMonth }) => {
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setMonth(parseInt(event.target.value));
-  };
-
-  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setYear(parseInt(event.target.value));
   };
 
   const renderOptionsForMonth = () => {
@@ -29,15 +20,6 @@ const Header: React.FC<HeaderProps> = ({
           .format(new Date(0, month - 1))
           .toString()
           .toUpperCase()}
-      </option>
-    ));
-  };
-
-  const renderOptionsForYear = () => {
-    const currentYear = new Date().getFullYear();
-    return Array.from({ length: 5 }, (_, i) => currentYear - i).map((year) => (
-      <option key={year} value={year}>
-        {year}
       </option>
     ));
   };

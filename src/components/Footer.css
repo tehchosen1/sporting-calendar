@@ -1,7 +1,7 @@
 /* src/components/Footer.css */
 .footer {
   display: flex;
-  position: absolute;
+  position: fixed;
   z-index: 2;
   align-items: center;
   left: 0;
