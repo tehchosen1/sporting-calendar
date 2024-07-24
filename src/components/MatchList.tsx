@@ -11,7 +11,7 @@ const MatchList: React.FC<MatchListProps> = ({ matches }) => {
   return (
     <div className="match-list">
       {matches.map((match, index) =>
-        match.result != "-" ? null : (
+        match.result !== "-" ? null : (
           <Match
             key={index}
             day={new Date(match.date).getDate()}

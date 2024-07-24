@@ -1,36 +1,107 @@
 import { useState, useEffect } from "react";
-import { scrapePlayerImage } from "../components/utils/scrapeSportingMatches";
 
 const useBackgroundImage = () => {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState<string | null>(
     null
   );
-  const [cachedBackgroundImages, setCachedBackgroundImages] = useState<
-    string[]
-  >([]);
+  const [imageUsageCount, setImageUsageCount] = useState<{
+    [key: string]: number;
+  }>({});
 
   useEffect(() => {
     const fetchBackgroundImage = async () => {
-      // If there are cached images, randomly select one
-      if (cachedBackgroundImages.length > 0) {
-        const randomIndex = Math.floor(
-          Math.random() * cachedBackgroundImages.length
-        );
-        setBackgroundImageUrl(cachedBackgroundImages[randomIndex]);
-      } else {
-        // Otherwise, fetch a new image and cache it
-        const imageUrl = await scrapePlayerImage();
-        if (imageUrl) {
-          setBackgroundImageUrl(imageUrl);
-          setCachedBackgroundImages((prev) => [...prev, imageUrl]);
+      try {
+        const response = await fetch("/photos.json");
+        const imagePaths: string[] = await response.json();
+
+        if (imagePaths.length > 0) {
+          let storedUsageCount = JSON.parse(
+            localStorage.getItem("imageUsageCount") || "{}"
+          );
+
+          // Initialize usage count for all images to 0 if not already set
+          imagePaths.forEach((image) => {
+            if (storedUsageCount[image] === undefined) {
+              storedUsageCount[image] = 0;
+            }
+          });
+
+          // Check if all images have been used once
+          const allUsedOnce = imagePaths.every(
+            (image) => storedUsageCount[image] === 1
+          );
+
+          if (allUsedOnce) {
+            // Reset usage counts
+            storedUsageCount = imagePaths.reduce((acc, image) => {
+              acc[image] = 0;
+              return acc;
+            }, {} as { [key: string]: number });
+          }
+
+          setImageUsageCount(storedUsageCount);
+          localStorage.setItem(
+            "imageUsageCount",
+            JSON.stringify(storedUsageCount)
+          );
+
+          // Select a new background image
+          const selectedImage = getWeightedRandomImage(
+            imagePaths,
+            storedUsageCount
+          );
+          setBackgroundImageUrl(selectedImage);
+
+          // Update the usage count for the selected image
+          const updatedUsageCount = {
+            ...storedUsageCount,
+            [selectedImage]: (storedUsageCount[selectedImage] || 0) + 1,
+          };
+          setImageUsageCount(updatedUsageCount);
+          localStorage.setItem(
+            "imageUsageCount",
+            JSON.stringify(updatedUsageCount)
+          );
         }
+      } catch (error) {
+        console.error("Failed to fetch background images:", error);
       }
     };
 
     fetchBackgroundImage();
-  }, [backgroundImageUrl, cachedBackgroundImages]);
+  }, []);
 
-  return { backgroundImageUrl };
+  return backgroundImageUrl;
+};
+
+const getWeightedRandomImage = (
+  imagePaths: string[],
+  usageCount: { [key: string]: number }
+): string => {
+  const availableImages = imagePaths.filter(
+    (image) => (usageCount[image] || 0) < 1
+  );
+
+  if (availableImages.length === 0) {
+    return imagePaths[Math.floor(Math.random() * imagePaths.length)];
+  }
+
+  const weights = availableImages.map(
+    (image) => 1 / ((usageCount[image] || 0) + 1)
+  );
+  const totalWeight = weights.reduce((acc, weight) => acc + weight, 0);
+  const randomWeight = Math.random() * totalWeight;
+
+  let cumulativeWeight = 0;
+  for (let i = 0; i < availableImages.length; i++) {
+    cumulativeWeight += weights[i];
+    if (randomWeight <= cumulativeWeight) {
+      return availableImages[i];
+    }
+  }
+
+  // Fallback in case of rounding errors
+  return availableImages[availableImages.length - 1];
 };
 
 export default useBackgroundImage;

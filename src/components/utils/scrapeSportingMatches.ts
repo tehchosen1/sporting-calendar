@@ -1,6 +1,5 @@
 import axios from "axios";
 import cheerio from "cheerio";
-const { CookieJar } = require("tough-cookie");
 
 export interface MatchInfo {
   date: string;
@@ -19,8 +18,6 @@ const BASE_NOPROXY_URL = "https://www.zerozero.pt";
 const TEAM_URL = `${BASE_URL}/equipa/sporting/jogos?grp=0&equipa_1=16&menu=allmatches`;
 const SPORTING_URL = `${CORS_PROXY}https://www.sporting.pt/pt/futebol/equipa-principal/plantel`;
 const SPORTING_BASE_URL = `${CORS_PROXY}https://www.sporting.pt/`;
-const cookieJar = new CookieJar();
-let clearCache = false;
 
 export const getCurrentMonthYear = () => {
   const now = new Date();
@@ -40,7 +37,6 @@ export const fetchMatchesForMonthYear = async (
   const key = generateMonthYearKey(month, year);
   if (localStorage.getItem("cleaned") !== "true") {
     localStorage.clear();
-    clearCache = true;
     localStorage.setItem("cleaned", "true");
   }
   const localStorageData =
@@ -117,6 +113,7 @@ async function fetchDataFromServer(
     return [];
   }
 }
+export let playerItems: string[] = [];
 
 export const scrapePlayerImage = async () => {
   try {
@@ -127,7 +124,6 @@ export const scrapePlayerImage = async () => {
       },
     });
     const $ = cheerio.load(data);
-    let playerItems: string[] = [];
 
     $(".plantelPosicoes").each((_, element) => {
       $(element)
@@ -158,6 +154,7 @@ export const scrapePlayerImage = async () => {
         .css("background-image")
         ?.replace(/url\("?(.+?)"?\)/, "$1") || "";
 
+    console.log(playerItems);
     return playerImageUrl;
   } catch (error) {
     console.error("Failed to scrape player image:", error);
