@@ -1,4 +1,29 @@
 /* Global styles */
+
+@font-face {
+  font-family: "DIN Web W07 Cond Black";
+  src: local("DIN Web W07 Cond Black"),
+    url(../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "DIN Web W07 Black";
+  src: local("DIN Web W07 Black"),
+    url(../public/DIN\ Web\ W07\ Black.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "DIN Web W07 Italic";
+  src: local("DIN Web W07 Italic"),
+    url(../public/DIN\ Web\ W07\ Italic.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "kenyan coffee rg";
+  src: local("kenyan coffee rg"),
+    url(../public/kenyan\ coffee\ rg.otf) format("woff");
+}
+
 body,
 html {
   margin: 0;
@@ -12,25 +37,47 @@ html {
 }
 
 .App {
-  background: url("../public/jl7_1002_1.jpg") top center / cover no-repeat;
-  background-attachment: fixed;
+  display: flex;
   background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
-  display: flex;
   margin: 0 auto;
   z-index: 0;
-  flex-direction: column;
   min-height: 100vh; /* Updated for full viewport height */
   width: 100%;
   overflow: hidden;
 }
 
+.background {
+  pointer-events: none;
+  position: fixed;
+  background-repeat: no-repeat;
+  bottom: 0;
+  background-position: var(--background-position-x, -20vh) top;
+  background-size: cover;
+  box-shadow: inset 20px 0px 100px 20px rgba(0, 0, 0, 1),
+    inset 0px 0px 60px 30px rgba(0, 0, 0, 1);
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25vw;
+  width: 480px;
+}
+
 .content {
+  word-break: break-all;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: auto;
-  height: 67vh;
+  min-height: 100vh; /* Updated for full viewport height */
+  width: 560px;
+}
+
+.container {
+  margin: auto;
+  min-height: 100vh; /* Updated for full viewport height */
   width: 560px;
 }

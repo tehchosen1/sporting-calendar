@@ -13,20 +13,23 @@ const App: React.FC = () => {
 
   return (
     <React.StrictMode>
-      <div
-        className="App"
-        style={{ backgroundImage: `url(${backgroundImageUrl})` }}
-      >
-        <Header
-          selectedMonth={selectedMonth}
-          selectedYear={selectedYear}
-          setMonth={setMonth}
-          setYear={setYear}
-        />
-        <main className="content">
-          <MatchList matches={matches} />
-        </main>
-        <Footer />
+      <div className="App">
+        <div className="container">
+          <div
+            className="background"
+            style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+          />
+          <Header
+            selectedMonth={selectedMonth}
+            selectedYear={selectedYear}
+            setMonth={setMonth}
+            setYear={setYear}
+          />
+          <main className="content">
+            <MatchList matches={matches} />
+          </main>
+          <Footer />
+        </div>
       </div>
     </React.StrictMode>
   );

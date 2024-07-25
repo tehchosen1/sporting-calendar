@@ -8,6 +8,8 @@ interface HeaderProps {
   setYear: (year: number) => void;
 }
 
+const calendarText = "Calendário de Jogos";
+
 const Header: React.FC<HeaderProps> = ({ selectedMonth, setMonth }) => {
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setMonth(parseInt(event.target.value));
@@ -30,17 +32,15 @@ const Header: React.FC<HeaderProps> = ({ selectedMonth, setMonth }) => {
         <div className="header-logo">
           <img src="../../icon_emblema.svg" alt="Logo" />
         </div>
-        <div className="header-right-wrapper">
-          <div className="header-text">Calendário de Jogos</div>
-          <div className="header-month-selector">
-            <select
-              className="header-month-text"
-              value={selectedMonth}
-              onChange={handleMonthChange}
-            >
-              {renderOptionsForMonth()}
-            </select>
-          </div>
+        <div className="header-text">{calendarText}</div>
+        <div className="header-month-selector">
+          <select
+            className="header-month-text"
+            value={selectedMonth}
+            onChange={handleMonthChange}
+          >
+            {renderOptionsForMonth()}
+          </select>
         </div>
       </div>
     </header>

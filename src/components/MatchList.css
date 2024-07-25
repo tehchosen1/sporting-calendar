@@ -1,23 +1,28 @@
 .match-list {
   display: flex;
   flex-direction: column;
-  margin-left: 0;
+  margin: 0 auto;
   height: 100%;
-  justify-content: center; /* Ensure content is aligned to the start of flex container */
-  align-items: flex-start; /* Ensure items are aligned to the start of the cross axis */
-  width: 100%; /* Ensure it takes up full width of the container */
-  overflow: scroll;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  overflow: hidden;
   gap: 25px;
 }
 
-.match-list::-webkit-scrollbar {
-  display: none;
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Adjust gap as needed */
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
-  .match-list {gap: 10px;
+  .match-list {
+    gap: 10px;
     margin-bottom: 0px;
     padding-bottom: 0px;
-    overflow: scroll;
+    overflow: hidden;
   }
 }

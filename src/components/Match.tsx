@@ -38,7 +38,9 @@ const Match: React.FC<MatchProps> = ({
           <img src={teamLogo} alt="team logo" className="team-logo" />
         </div>
       </div>
-      <div className="match-time">{time}</div>
+      <div className="match-time">
+        <div className="match-time-text">{time}</div>
+      </div>
       <div className="match-fill">
         <div className="match-type">{extraInfo.toUpperCase()}</div>
       </div>

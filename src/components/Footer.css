@@ -1,142 +1,113 @@
-/* src/components/Footer.css */
 .footer {
-  display: flex;
   position: fixed;
-  z-index: 2;
-  align-items: center;
   left: 0;
-  bottom: 0;
-  margin-bottom: 55px;
-  height: 160px;
+  bottom: 30px;
   width: 100%;
-  text-shadow: rgba(0, 0, 0, 0.25) 1px 2px 0px;
-}
-
-@font-face {
-  font-family: "DIN Web W07 Cond Black";
-  src: local("DIN Web W07 Cond Black"),
-    url(../../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
-}
-
-@font-face {
-  font-family: "DIN Web W07 Italic";
-  src: local("DIN Web W07 Italic"),
-    url(../../public/DIN\ Web\ W07\ Italic.ttf) format("woff");
+  height: 100px;
+  z-index: 2;
+  text-shadow: rgba(0, 0, 0, 0.15) 2px 2px 0px;
 }
 
 .footer-background {
-  margin-top: 35px;
-  background-color: #fff;
-  width: 100%;
-  height: 80px;
   position: absolute;
-  align-items: center;
-  z-index: -1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .footer-background-green {
   background-color: #0b704a;
-  width: 100%;
-  height: 40%;
+  height: 30%;
+}
+
+.footer-background-white {
+  background-color: #fff;
+  height: 70%;
+}
+
+.footer-content {
   position: relative;
-  margin-top: -25px;
-  z-index: -1;
-}
-
-.footer-wrapper {
-  margin: auto;
+  max-width: 560px;
+  margin: 0 auto;
+  height: 100%;
   display: flex;
-}
-
-.footer-background {
-  width: 100%;
-  height: 60px;
-}
-
-.footer {
-  height: 60px;
-}
-
-.footer-wrapper {
-  width: 560px;
+  justify-content: center;
   gap: 10px;
 }
 
 .footer-logo {
-  width: 125px; /* Smaller logo for mobile */
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 3;
+  align-self: center;
 }
+
 .footer-logo img {
+  width: 90px;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
-  margin-top: -25px;
-  height: 120px; /* Smaller logo for mobile */
 }
 
 .footer-text {
-  font-size: 2rem;
-  margin-top: -10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  height: 100%;
+}
+
+.footer-text-flavor {
+  font-size: 1.3rem;
+  font-family: "DIN Web W07 Cond Black";
   color: #fff;
-  width: 26rem;
+  height: 30%;
+  display: flex;
+  align-items: center;
+}
+
+.footer-text-main {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer-text-minde,
+.footer-text-random {
+  font-family: "kenyan coffee rg";
 }
 
 .footer-text-minde {
-  margin-top: -2px;
-  font-size: 1.65rem;
-  font-family: "DIN Web W07 Cond Black";
+  font-size: 2.2rem;
   color: #0b704a;
-}
-.footer-text-flavor {
-  font-size: 1.2rem;
-  font-family: "DIN Web W07 Cond Black";
-  color: #fff;
 }
 
 .footer-text-random {
-  font-size: 0.8rem;
-  font-family: "DIN Web W07 Italic";
-  color: #000000;
+  font-size: 1.15rem;
+  color: #000;
 }
 
 @media (max-width: 595px) {
-  .footer-wrapper {
-    gap: 0px;
+  .footer {
+    height: 80px;
   }
 
-  .footer-background {
-    height: 60px;
+  .footer-content {
+    padding: 0 20px;
   }
 
-  .footer-logo {
-    margin-bottom: 15px;
+  .footer-logo img {
+    width: 70px;
   }
 
-  .footer-text {
-    font-size: 2rem;
-    margin-top: -13px;
-    color: #fff;
-    width: 26rem;
+  .footer-text-flavor {
+    font-size: 1.2rem;
   }
 
   .footer-text-minde {
-    margin-top: 5px;
-    font-size: 0.72em;
-    font-family: "DIN Web W07 Cond Black";
-    color: #0b704a;
-  }
-  .footer-text-flavor {
-    font-size: 0.5em;
-    margin-top: 5px;
-    font-family: "DIN Web W07 Cond Black";
-    color: #fff;
+    font-size: 1.7em;
   }
 
   .footer-text-random {
-    font-weight: bold;
-    font-size: 0.29em;
-    font-family: "DIN Web W07 Italic";
-    color: #000000;
+    font-size: 0.85em;
   }
 }
