@@ -16,14 +16,10 @@ const MatchList: React.FC<MatchListProps> = ({ matches }) => {
 
   console.log(sortedMatches.length);
 
-  // Group matches into columns of 4
-  const columns = [];
-  for (let i = 0; i < sortedMatches.length; i += 4) {
-    columns.push(sortedMatches.slice(i, i + 4));
-  }
-
   return (
-    <div className={`match-list-container-${sortedMatches.length > 4 ? "2" : "1"}`}>
+    <div
+      className={`match-list-container-${sortedMatches.length > 4 ? "2" : "1"}`}
+    >
       {sortedMatches.map((match) => (
         <Match
           key={match.date + match.time + match.teamName}
