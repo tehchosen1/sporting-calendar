@@ -17,7 +17,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 40%; /* This should match the width of your month selector */
+  width: 45%; /* This should match the width of your month selector */
   background-color: #0b704a; /* Dark green color */
   z-index: -1; /* Place it behind the content */
 }
@@ -28,7 +28,6 @@
   justify-content: center;
   width: 560px;
   height: 80px;
-  padding: 0 20px;
 }
 
 .header-logo {
@@ -98,6 +97,6 @@
   }
 
   .header-month-text {
-    font-size: calc(1.85em + 1vw);
+    font-size: calc(2em + 1vw);
   }
 }
