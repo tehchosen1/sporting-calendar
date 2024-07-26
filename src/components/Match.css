@@ -11,21 +11,28 @@
 
 @font-face {
   font-family: "DIN Web W07 Cond Black";
-  src: local("DIN Web W07 Cond Black"), url(../../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
+  src: local("DIN Web W07 Cond Black"),
+    url(../../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
 }
 @font-face {
   font-family: "DIN Web W07 Cond";
-  src: local("DIN Web W07 Black"), url(../../public/DIN\ Web\ W07\ Cond.ttf) format("woff");
+  src: local("DIN Web W07 Black"),
+    url(../../public/DIN\ Web\ W07\ Cond.ttf) format("woff");
 }
 
 @font-face {
   font-family: "kenyan coffee rg";
-  src: local("kenyan coffee rg"), url(../../public/kenyan\ coffee\ rg.otf) format("woff");
+  src: local("kenyan coffee rg"),
+    url(../../public/kenyan\ coffee\ rg.otf) format("woff");
 }
-
+.match-list-container-1 .match {
+  width: 360px;
+}
 .match-field {
-  writing-mode: vertical-lr; /* This will rotate the text */
-  transform: rotate(180deg); /* This will ensure "GAME" starts from the bottom going up */
+  writing-mode: horizontal-tb;
+  transform: rotate(
+    180deg
+  ); /* This will ensure "GAME" starts from the bottom going up */
   text-align: center;
   font-family: "DIN Web W07 Black";
   text-shadow: rgba(0, 0, 0, 0.25) -2px 3px 0px;
@@ -39,6 +46,10 @@
   grid-column: 3; /* Position in the third column */
   grid-row: 1 / span 2; /* Span through the entire height */
   align-content: center; /* Center vertically */
+}
+
+.match-field-text {
+  writing-mode: vertical-lr;
 }
 
 .match-day {
@@ -134,12 +145,14 @@
   text-align: center;
   font-size: 14px;
   z-index: 2;
+  white-space: normal; /* Allow line breaks */
+  word-break: keep-all;
 }
 
 @media (max-width: 560px) {
-  /* .match {
-    width: 300px;
-  } */
+  .match-list-container-1 .match {
+    width: 250px;
+  }
   .match-day {
     margin: 0;
     font-size: 3em; /* Adjust font size */
@@ -148,7 +161,7 @@
 
   .match-description {
     padding-left: 5px; /* Adjust padding */
-    font-size: 1.75em; /* Adjust font size */
+    font-size: 1.65em; /* Adjust font size */
   }
 
   .match-team {
@@ -169,6 +182,10 @@
   .match-field {
     width: 18px; /* Adjust width */
     font-size: 0.8em; /* Adjust font size */
+  }
+
+  .match-fill {
+    font-size: 0.65em; /* Adjust font size */
   }
 
   .match-type {
