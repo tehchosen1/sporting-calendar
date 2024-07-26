@@ -50,6 +50,7 @@
 
 .match-field-text {
   writing-mode: vertical-lr;
+  margin-left: 3px;
 }
 
 .match-day {
