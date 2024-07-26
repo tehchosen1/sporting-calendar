@@ -1,25 +1,36 @@
-.match-list-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.match-list-container-1 {
   gap: 20px;
   padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.match-list-container-2 {
+  gap: 20px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .match-column {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 10px; */
 }
 
 @media (max-width: 768px) {
-  .match-list-container {
+  .match-list-container-1 {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .match-list-container-2 {
     padding: 10px;
     gap: 10px;
   }
 
   .small {
-    width: 240px;
+    /* width: 240px; */
   }
 
   .small .match-day {

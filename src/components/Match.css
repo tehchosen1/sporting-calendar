@@ -1,7 +1,7 @@
 /* src/components/Match.css */
 .match {
   display: grid;
-  width: 320px;
+  /* width: 320px; */
   height: 85px;
   margin: 5px 0; /* Adjust margin as needed */
   grid-template-columns: 1fr 7fr 1fr;
@@ -11,26 +11,21 @@
 
 @font-face {
   font-family: "DIN Web W07 Cond Black";
-  src: local("DIN Web W07 Cond Black"),
-    url(../../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
+  src: local("DIN Web W07 Cond Black"), url(../../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
 }
 @font-face {
   font-family: "DIN Web W07 Cond";
-  src: local("DIN Web W07 Black"),
-    url(../../public/DIN\ Web\ W07\ Cond.ttf) format("woff");
+  src: local("DIN Web W07 Black"), url(../../public/DIN\ Web\ W07\ Cond.ttf) format("woff");
 }
 
 @font-face {
   font-family: "kenyan coffee rg";
-  src: local("kenyan coffee rg"),
-    url(../../public/kenyan\ coffee\ rg.otf) format("woff");
+  src: local("kenyan coffee rg"), url(../../public/kenyan\ coffee\ rg.otf) format("woff");
 }
 
 .match-field {
   writing-mode: vertical-lr; /* This will rotate the text */
-  transform: rotate(
-    180deg
-  ); /* This will ensure "GAME" starts from the bottom going up */
+  transform: rotate(180deg); /* This will ensure "GAME" starts from the bottom going up */
   text-align: center;
   font-family: "DIN Web W07 Black";
   text-shadow: rgba(0, 0, 0, 0.25) -2px 3px 0px;
@@ -142,9 +137,9 @@
 }
 
 @media (max-width: 560px) {
-  .match {
+  /* .match {
     width: 300px;
-  }
+  } */
   .match-day {
     margin: 0;
     font-size: 3em; /* Adjust font size */
@@ -173,7 +168,7 @@
 
   .match-field {
     width: 18px; /* Adjust width */
-    font-size: 0.9em; /* Adjust font size */
+    font-size: 0.8em; /* Adjust font size */
   }
 
   .match-type {
