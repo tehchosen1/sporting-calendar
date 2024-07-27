@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Header";
 import MatchList from "./components/MatchList";
 import Footer from "./components/Footer";
@@ -11,10 +11,15 @@ const App: React.FC = () => {
   const { matches, selectedMonth, selectedYear, setMonth, setYear } =
     useMatches();
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <React.StrictMode>
       <div className="App">
-        <div className="container">
           <div
             className="background"
             style={{ backgroundImage: `url(${backgroundImageUrl})` }}
@@ -24,12 +29,15 @@ const App: React.FC = () => {
             selectedYear={selectedYear}
             setMonth={setMonth}
             setYear={setYear}
+            onLogoClick={toggleSidebar}
           />
-          <main className="content">
-            <MatchList matches={matches} />
-          </main>
+          <div className="container">
+            <main>
+              <MatchList matches={matches} />
+            </main>
+          </div>
           <Footer />
-        </div>
+        
       </div>
     </React.StrictMode>
   );
