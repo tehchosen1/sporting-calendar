@@ -8,7 +8,6 @@ interface MatchProps {
   extraInfo: string;
   teamLogo: string;
   field: string;
-  small?: boolean;
 }
 
 const getMatchFieldDisplay = (field: string) => {
@@ -22,17 +21,9 @@ const getMatchFieldDisplay = (field: string) => {
   }
 };
 
-const Match: React.FC<MatchProps> = ({
-  small,
-  day,
-  team_name,
-  time,
-  extraInfo,
-  teamLogo,
-  field,
-}) => {
+const Match: React.FC<MatchProps> = ({ day, team_name, time, extraInfo, teamLogo, field }) => {
   return (
-    <div className={`match ${small ? "small" : ""}`}>
+    <div className={`match`}>
       <div className="match-day">{day}</div>
       <div className="match-description">
         <div className="block">
@@ -47,9 +38,7 @@ const Match: React.FC<MatchProps> = ({
         <div className="match-type">{extraInfo.toUpperCase()}</div>
       </div>
       <div className="match-field">
-        <div className="match-field-text">
-          {getMatchFieldDisplay(field).toUpperCase()}
-        </div>
+        <div className="match-field-text">{getMatchFieldDisplay(field).toUpperCase()}</div>
       </div>
     </div>
   );

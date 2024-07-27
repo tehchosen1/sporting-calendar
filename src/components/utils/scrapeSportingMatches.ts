@@ -12,7 +12,7 @@ export interface MatchInfo {
   result: string;
 }
 
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+const CORS_PROXY = "http://localhost:8080/";
 const BASE_URL = `${CORS_PROXY}https://www.zerozero.pt`;
 const BASE_NOPROXY_URL = "https://www.zerozero.pt";
 const TEAM_URL = `${BASE_URL}/equipa/sporting/jogos?grp=0&equipa_1=16&menu=allmatches`;

@@ -1,7 +1,7 @@
 /* src/components/Match.css */
 .match {
   display: grid;
-  width: 320px;
+  /* width: 320px; */
   height: 85px;
   margin: 5px 0; /* Adjust margin as needed */
   grid-template-columns: 1fr 7fr 1fr;
@@ -25,9 +25,11 @@
   src: local("kenyan coffee rg"),
     url(../../public/kenyan\ coffee\ rg.otf) format("woff");
 }
-
+.match-list-container-1 .match {
+  width: 360px;
+}
 .match-field {
-  writing-mode: vertical-lr; /* This will rotate the text */
+  writing-mode: horizontal-tb;
   transform: rotate(
     180deg
   ); /* This will ensure "GAME" starts from the bottom going up */
@@ -44,6 +46,11 @@
   grid-column: 3; /* Position in the third column */
   grid-row: 1 / span 2; /* Span through the entire height */
   align-content: center; /* Center vertically */
+}
+
+.match-field-text {
+  writing-mode: vertical-lr;
+  margin-left: 3px;
 }
 
 .match-day {
@@ -139,11 +146,13 @@
   text-align: center;
   font-size: 14px;
   z-index: 2;
+  white-space: normal; /* Allow line breaks */
+  word-break: keep-all;
 }
 
 @media (max-width: 560px) {
-  .match {
-    width: 300px;
+  .match-list-container-1 .match {
+    width: 250px;
   }
   .match-day {
     margin: 0;
@@ -153,7 +162,7 @@
 
   .match-description {
     padding-left: 5px; /* Adjust padding */
-    font-size: 1.75em; /* Adjust font size */
+    font-size: 1.65em; /* Adjust font size */
   }
 
   .match-team {
@@ -173,7 +182,11 @@
 
   .match-field {
     width: 18px; /* Adjust width */
-    font-size: 0.9em; /* Adjust font size */
+    font-size: 0.8em; /* Adjust font size */
+  }
+
+  .match-fill {
+    font-size: 0.65em; /* Adjust font size */
   }
 
   .match-type {

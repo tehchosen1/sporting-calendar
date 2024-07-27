@@ -17,7 +17,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 40%; /* This should match the width of your month selector */
+  width: 45%; /* This should match the width of your month selector */
   background-color: #0b704a; /* Dark green color */
   z-index: -1; /* Place it behind the content */
 }
@@ -28,7 +28,6 @@
   justify-content: center;
   width: 560px;
   height: 80px;
-  padding: 0 20px;
 }
 
 .header-logo {
@@ -43,7 +42,7 @@
 }
 
 .header-text {
-  width: 20%;
+  width: 23%;
   padding-right: 10px;
   color: #fff;
   font-family: "DIN Web W07 Cond Black", sans-serif;
@@ -53,7 +52,7 @@
 }
 
 .header-month-selector {
-  width: 35%;
+  width: 37%;
   height: 100%;
   background-color: #0b704a;
   display: flex;
@@ -69,6 +68,7 @@
   border: none;
   padding: 0 10px;
   font-size: calc(2.25em + 1vw);
+  background-color: #0b704a;
   font-family: "kenyan coffee rg", sans-serif;
   color: #fff;
   cursor: pointer;
@@ -85,12 +85,12 @@
     height: 65px;
   }
   .header-logo {
-    width: 100px;
+    width: 85px;
     display: flex;
     align-items: center;
   }
   .header-logo img {
-    height: 120px;
+    height: 100px;
   }
 
   .header-text {
@@ -98,6 +98,6 @@
   }
 
   .header-month-text {
-    font-size: calc(1.85em + 1vw);
+    font-size: calc(2em + 1vw);
   }
 }
