@@ -6,11 +6,16 @@ interface HeaderProps {
   selectedYear: number;
   setMonth: (month: number) => void;
   setYear: (year: number) => void;
+  onLogoClick: () => void;
 }
 
 const calendarText = "Calendário de Jogos";
 
-const Header: React.FC<HeaderProps> = ({ selectedMonth, setMonth }) => {
+const Header: React.FC<HeaderProps> = ({
+  selectedMonth,
+  setMonth,
+  onLogoClick,
+}) => {
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setMonth(parseInt(event.target.value));
   };
@@ -29,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({ selectedMonth, setMonth }) => {
   return (
     <header className="header">
       <div className="header-wrapper">
-        <div className="header-logo">
+        <div className="header-logo" onClick={onLogoClick}>
           <img src="../../icon_emblema.svg" alt="Logo" />
         </div>
         <div className="header-text">{calendarText}</div>
