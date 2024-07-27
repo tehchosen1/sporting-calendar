@@ -68,6 +68,7 @@
   border: none;
   padding: 0 10px;
   font-size: calc(2.25em + 1vw);
+  background-color: #0b704a;
   font-family: "kenyan coffee rg", sans-serif;
   color: #fff;
   cursor: pointer;
