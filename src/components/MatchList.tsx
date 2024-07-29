@@ -20,17 +20,21 @@ const MatchList: React.FC<MatchListProps> = ({ matches }) => {
     <div
       className={`match-list-container-${sortedMatches.length > 4 ? "2" : "1"}`}
     >
-      {sortedMatches.map((match) => (
-        <Match
-          key={match.date + match.time + match.teamName}
-          day={new Date(match.date).getDate()}
-          team_name={match.teamName}
-          time={match.time}
-          extraInfo={match.leagueName}
-          teamLogo={match.teamIcon}
-          field={match.field}
-        />
-      ))}
+      {sortedMatches.map((match) =>
+        match.result != "-" ? (
+          "-"
+        ) : (
+          <Match
+            key={match.date + match.time + match.teamName}
+            day={new Date(match.date).getDate()}
+            team_name={match.teamName}
+            time={match.time}
+            extraInfo={match.leagueName}
+            teamLogo={match.teamIcon}
+            field={match.field}
+          />
+        )
+      )}
     </div>
   );
 };

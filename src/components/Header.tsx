@@ -8,7 +8,7 @@ interface HeaderProps {
   setYear: (year: number) => void;
 }
 
-const calendarText = "Calendário de Jogos";
+const calendarText = "Calendário de Futebol";
 
 const Header: React.FC<HeaderProps> = ({ selectedMonth, setMonth }) => {
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
