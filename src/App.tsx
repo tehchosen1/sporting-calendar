@@ -8,7 +8,7 @@ import "./App.css";
 
 const App: React.FC = () => {
   const backgroundImageUrl = useBackgroundImage();
-  const { matches, selectedMonth, selectedYear, setMonth, setYear } =
+  const { matches, selectedMonth, selectedYear, setMonth, setYear, isLoading } =
     useMatches();
 
   return (
@@ -26,7 +26,25 @@ const App: React.FC = () => {
             setYear={setYear}
           />
           <main className="content">
-            <MatchList matches={matches} />
+            {isLoading ? (
+              <div
+                className="loading"
+                style={{
+                  color: "white",
+                  fontFamily: "kenyan coffee rg",
+                  width: "100%",
+                  height: "100%",
+                  fontSize: "3rem",
+                  textAlign: "center",
+                  zIndex: 1000,
+                  textShadow: "rgba(0, 0, 0, 0.15) 2px 2px 0px",
+                }}
+              >
+                Carregando jogos...
+              </div>
+            ) : (
+              <MatchList matches={matches} />
+            )}
           </main>
           <Footer />
         </div>

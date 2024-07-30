@@ -1,14 +1,175 @@
-const cors_proxy = require("cors-anywhere");
+const express = require("express");
+const puppeteer = require("puppeteer");
+const cors = require("cors");
+const fs = require("fs").promises;
+const path = require("path");
+const axios = require("axios");
+const app = express();
+const port = 3001; // Choose an appropriate port
 
-const host = "0.0.0.0";
-const port = 8080;
+const IMAGES_DIR = path.join(__dirname, "images");
+fs.mkdir(IMAGES_DIR, { recursive: true });
 
-cors_proxy
-  .createServer({
-    originWhitelist: [], // Allow all origins
-    requireHeader: ["origin", "x-requested-with"],
-    removeHeaders: ["cookie", "cookie2"],
+async function downloadImage(url, filename) {
+  const response = await axios.get(url, { responseType: "arraybuffer" });
+  const imagePath = path.join(IMAGES_DIR, filename);
+  await fs.writeFile(imagePath, response.data);
+  return `/api/images/${filename}`;
+}
+
+app.use(
+  cors({
+    origin: "*", // Allow only your frontend origin
+    methods: ["GET"], // Allow only GET requests
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
-  .listen(port, host, () => {
-    console.log(`Running CORS Anywhere on ${host}:${port}`);
+);
+
+// In-memory cache
+const cache = {
+  matches: {},
+  playerImages: [],
+};
+
+const TEAM_URL =
+  "https://www.zerozero.pt/equipa/sporting/jogos?grp=0&equipa_1=16&menu=allmatches";
+const SPORTING_URL =
+  "https://www.sporting.pt/pt/futebol/equipa-principal/plantel";
+
+async function scrapeMatches(month, year) {
+  let browser;
+  try {
+    browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(TEAM_URL, { waitUntil: "networkidle0" });
+
+    const matches = await page.evaluate(
+      (month, year) => {
+        const matchInfos = [];
+        const rows = document.querySelectorAll("#team_games .stats tr.parent");
+        rows.forEach((row) => {
+          const dateText = row.querySelector("td.double")?.textContent?.trim();
+          if (!dateText) return;
+
+          const date = new Date(dateText);
+          if (date.getMonth() + 1 === month && date.getFullYear() === year) {
+            matchInfos.push({
+              date: dateText,
+              time:
+                row.querySelector("td:nth-child(3)")?.textContent?.trim() || "",
+              field:
+                row.querySelector("td:nth-child(4)")?.textContent?.trim() || "",
+              teamIcon: row.querySelector("td a img")?.src || "",
+              teamName:
+                row.querySelector("td.text a")?.textContent?.trim() || "",
+              leagueIcon: row.querySelector("td img:nth-child(2)")?.src || "",
+              leagueName:
+                row
+                  .querySelector("td .micrologo_and_text .text a")
+                  ?.textContent?.trim() || "",
+              result: row.querySelector(".result")?.textContent?.trim() || "",
+            });
+          }
+        });
+        return matchInfos;
+      },
+      month,
+      year
+    );
+    for (const match of matches) {
+      if (match.teamIcon) {
+        match.teamIcon = await downloadImage(
+          match.teamIcon,
+          `${match.teamName.replace(/\s+/g, "_")}.png`
+        );
+      }
+      if (match.leagueIcon) {
+        match.leagueIcon = await downloadImage(
+          match.leagueIcon,
+          `league_${match.leagueName.replace(/\s+/g, "_")}.png`
+        );
+      }
+    }
+    return matches.reverse();
+  } catch (error) {
+    console.error("Error in scrapeMatches:", error);
+    throw error;
+  } finally {
+    if (browser) {
+      await browser.close();
+    }
+  }
+}
+
+async function scrapePlayerImages() {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(SPORTING_URL);
+
+  const playerUrls = await page.evaluate(() => {
+    const urls = [];
+    document
+      .querySelectorAll(".plantelPosicoes .players__item a")
+      .forEach((a) => {
+        if (!a.href.includes("equipa-tecnica")) {
+          urls.push(a.href);
+        }
+      });
+    return urls;
   });
+
+  const playerImageUrls = [];
+  for (const url of playerUrls) {
+    await page.goto(url);
+    const imageUrl = await page.evaluate(() => {
+      const style =
+        document.querySelector("div.player__photo").style.backgroundImage;
+      return style.replace(/url\("?(.+?)"?\)/, "$1");
+    });
+    playerImageUrls.push(imageUrl);
+  }
+
+  await browser.close();
+  return playerImageUrls;
+}
+
+app.get("/api/matches/:month/:year", async (req, res) => {
+  const { month, year } = req.params;
+  const cacheKey = `${year}-${month.padStart(2, "0")}`;
+
+  if (cache.matches[cacheKey]) {
+    return res.json(cache.matches[cacheKey]);
+  }
+
+  try {
+    const matches = await scrapeMatches(parseInt(month), parseInt(year));
+    cache.matches[cacheKey] = matches;
+    res.json(matches);
+  } catch (error) {
+    console.error("Error fetching matches:", error);
+    res.status(500).json({ error: "Failed to fetch matches" });
+  }
+});
+
+app.get("/api/player-image", async (req, res) => {
+  if (cache.playerImages.length === 0) {
+    try {
+      cache.playerImages = await scrapePlayerImages();
+    } catch (error) {
+      console.error("Error fetching player images:", error);
+      return res.status(500).json({ error: "Failed to fetch player images" });
+    }
+  }
+
+  const randomIndex = Math.floor(Math.random() * cache.playerImages.length);
+  res.json({ imageUrl: cache.playerImages[randomIndex] });
+});
+
+app.get("/api/images/:filename", (req, res) => {
+  const { filename } = req.params;
+  res.sendFile(path.join(IMAGES_DIR, filename));
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
