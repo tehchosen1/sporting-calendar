@@ -1,7 +1,7 @@
 .header {
   width: 100%;
   background-color: #21b46b;
-  position: absolute;
+  position: fixed;
   top: 50px;
   left: 0;
   height: 80px;
@@ -76,25 +76,29 @@
   text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
 }
 
-@media (max-width: 595px) {
+@media (max-width: 560px) {
   .header {
-    height: 65px;
+    height: 50px;
   }
 
   .header-wrapper {
     height: 65px;
   }
   .header-logo {
-    width: 85px;
+    width: 80px;
     display: flex;
     align-items: center;
   }
   .header-logo img {
-    height: 100px;
+    height: 90px;
   }
 
   .header-text {
     font-size: 1.2rem;
+  }
+
+  .header-month-selector {
+    height: 50px;
   }
 
   .header-month-text {

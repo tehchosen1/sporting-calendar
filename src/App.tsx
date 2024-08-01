@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Header from "./components/Header";
 import MatchList from "./components/MatchList";
 import Footer from "./components/Footer";
 import useMatches from "./hooks/useMatches";
 import useBackgroundImage from "./hooks/useBackgroundImage";
 import "./App.css";
+import { MatchInfo } from "./components/utils/scrapeSportingMatches2";
+import MatchDetails from "./components/MatchDetails";
 
 const App: React.FC = () => {
   const backgroundImageUrl = useBackgroundImage();
   const { matches, selectedMonth, selectedYear, setMonth, setYear, isLoading } =
     useMatches();
+  const [selectedMatch, setSelectedMatch] = useState<MatchInfo | null>(null);
+  const [numberOfColumns, setNumberOfColumns] = useState(1);
+
+  const handleMatchClick = (match: MatchInfo) => {
+    setSelectedMatch(match);
+  };
+  const handleColumnChange = useCallback((columns: number) => {
+    setNumberOfColumns(columns);
+  }, []);
 
   return (
     <React.StrictMode>
@@ -17,7 +28,11 @@ const App: React.FC = () => {
         <div className="container">
           <div
             className="background"
-            style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+            style={{
+              backgroundImage: `url(${
+                numberOfColumns > 1 ? "estadio.png" : backgroundImageUrl
+              })`,
+            }}
           />
           <Header
             selectedMonth={selectedMonth}
@@ -42,8 +57,17 @@ const App: React.FC = () => {
               >
                 Carregando jogos...
               </div>
+            ) : selectedMatch ? (
+              <MatchDetails
+                match={selectedMatch}
+                onBack={() => setSelectedMatch(null)}
+              />
             ) : (
-              <MatchList matches={matches} />
+              <MatchList
+                matches={matches}
+                onColumnChange={handleColumnChange}
+                onMatchClick={handleMatchClick}
+              />
             )}
           </main>
           <Footer />

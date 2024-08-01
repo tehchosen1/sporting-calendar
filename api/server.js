@@ -11,10 +11,20 @@ const IMAGES_DIR = path.join(__dirname, "images");
 fs.mkdir(IMAGES_DIR, { recursive: true });
 
 async function downloadImage(url, filename) {
-  const response = await axios.get(url, { responseType: "arraybuffer" });
   const imagePath = path.join(IMAGES_DIR, filename);
-  await fs.writeFile(imagePath, response.data);
-  return `/api/images/${filename}`;
+
+  // Check if file already exists
+  try {
+    await fs.access(imagePath);
+    console.log(`File ${filename} already exists. Skipping download.`);
+    return `/api/images/${filename}`;
+  } catch {
+    // File does not exist, proceed with download
+    console.log(`Downloading ${filename} from ${url}`);
+    const response = await axios.get(url, { responseType: "arraybuffer" });
+    await fs.writeFile(imagePath, response.data);
+    return `/api/images/${filename}`;
+  }
 }
 
 app.use(
@@ -60,6 +70,8 @@ async function scrapeMatches(month, year) {
               field:
                 row.querySelector("td:nth-child(4)")?.textContent?.trim() || "",
               teamIcon: row.querySelector("td a img")?.src || "",
+              leagueHref:
+                row.querySelector("td .micrologo_and_text .text a")?.href || "",
               teamName:
                 row.querySelector("td.text a")?.textContent?.trim() || "",
               leagueIcon: row.querySelector("td img:nth-child(2)")?.src || "",
@@ -83,11 +95,36 @@ async function scrapeMatches(month, year) {
           `${match.teamName.replace(/\s+/g, "_")}.png`
         );
       }
-      if (match.leagueIcon) {
-        match.leagueIcon = await downloadImage(
-          match.leagueIcon,
-          `league_${match.leagueName.replace(/\s+/g, "_")}.png`
-        );
+
+      if (match.leagueHref) {
+        const leagueIconFilename = `league_${match.leagueName.replace(
+          /[\/\s]+/g,
+          "_"
+        )}.png`;
+
+        // Check if league icon already exists
+        try {
+          await fs.access(path.join(IMAGES_DIR, leagueIconFilename));
+          console.log(
+            `League icon for ${match.leagueName} already exists. Skipping download.`
+          );
+          match.leagueIcon = `/api/images/${leagueIconFilename}`;
+        } catch {
+          // File does not exist, proceed with scraping
+          await page.goto(match.leagueHref, { waitUntil: "networkidle0" });
+          console.log("Scraping league icon for:", match.leagueName);
+          const leagueIcon = await page.evaluate(() => {
+            const imgElement = document.querySelector(".profile_picture img");
+            return imgElement ? imgElement.src : "";
+          });
+
+          if (leagueIcon) {
+            match.leagueIcon = await downloadImage(
+              leagueIcon,
+              `league_${match.leagueName.replace(/[\/\s]+/g, "_")}.png`
+            );
+          }
+        }
       }
     }
     return matches.reverse();

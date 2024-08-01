@@ -23,18 +23,24 @@
   src: local("kenyan coffee rg"),
     url(../public/kenyan\ coffee\ rg.otf) format("woff");
 }
-
-body,
-html {
+* {
   margin: 0;
   padding: 0;
-  width: 100%;
+  box-sizing: border-box;
+}
+
+@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css";
+body,
+html {
+  overflow: hidden;
   height: 100%;
-  background-color: black;
+  margin: 0;
+  padding: 0;
 }
 
 #root {
   background-color: rgba(0, 0, 0, 1);
+  overflow-y: hidden;
 }
 
 .App {
@@ -43,7 +49,6 @@ html {
   background-blend-mode: multiply;
   margin: 0 auto;
   z-index: 0;
-  min-height: 100vh; /* Updated for full viewport height */
   width: 100%;
   overflow: hidden;
   background-color: black;
@@ -54,7 +59,7 @@ html {
   position: fixed;
   background-repeat: no-repeat;
   bottom: 0;
-  background-position: -20vh top;
+  background-position: -20dvh top;
   background-size: cover;
   box-shadow: inset -30px 0px 100px 40px rgba(0, 0, 0, 1),
     inset 0px 0px 60px 30px rgba(0, 0, 0, 1);
@@ -74,14 +79,15 @@ html {
   justify-content: center;
   align-items: baseline;
   margin: auto;
-  min-height: 100vh; /* Updated for full viewport height */
+  min-height: 100dvh; /* Updated for full viewport height */
   background-color: black;
+  overflow: hidden;
   /* width: 560px; */
 }
 
 .container {
   margin: auto;
-  min-height: 100vh; /* Updated for full viewport height */
+  min-height: 100dvh; /* Updated for full viewport height */
   width: 560px;
   background-color: black;
 }

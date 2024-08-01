@@ -25,7 +25,6 @@ const Footer: React.FC = () => {
           <img src="../../scp-minde.svg" alt="Logo" />
         </div>
         <div className="footer-text">
-          <div className="footer-text-flavor">{textAssistir.toUpperCase()}</div>
           <div className="footer-text-main">
             <div className="footer-text-minde">{textMinde.toUpperCase()}</div>
             <div className="footer-text-random">{randomTxt.toUpperCase()}</div>
