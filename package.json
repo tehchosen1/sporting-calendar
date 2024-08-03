@@ -27,8 +27,8 @@
   },
   "scripts": {
     "start:dev": "PORT=3004 react-scripts start",
-    "start": "cd api && npm install && cd .. && concurrently \"PORT=3004 react-scripts start\" \"node api/server.js\"",
-    "build": "cd api && npm install && cd .. && react-scripts build",
+    "start": "cd api && npm install && cd .. && concurrently \"react-scripts start\" \"node api/server.js\"",
+    "build": "cd api && npm install && cd .. && concurrently \"react-scripts build\" \"node api/server.js\"",
     "serve": "concurrently \"serve -s build\" \"node api/server.js\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

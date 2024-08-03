@@ -9,7 +9,7 @@ export interface MatchInfo {
   result: string;
 }
 
-const API_BASE_URL = "http://192.168.1.75:3001/api"; // Update this with your server's URL
+const API_BASE_URL = "https://sporting-calendar-1.onrender.com/api"; // Update this with your server's URL
 
 export const getCurrentMonthYear = () => {
   const now = new Date();
