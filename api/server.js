@@ -6,6 +6,7 @@ const path = require("path");
 const axios = require("axios");
 const app = express();
 const port = 3001; // Choose an appropriate port
+const dotenv = require("dotenv");
 
 const IMAGES_DIR = path.join(__dirname, "images");
 fs.mkdir(IMAGES_DIR, { recursive: true });
@@ -48,8 +49,20 @@ const SPORTING_URL =
 
 async function scrapeMatches(month, year) {
   let browser;
+  browser = await puppeteer.launch({
+    args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+    headless: "true",
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+  });
   try {
-    browser = await puppeteer.launch({ headless: "true" });
     const page = await browser.newPage();
     await page.setUserAgent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36"
