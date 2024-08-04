@@ -7,6 +7,10 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 RUN npm ci
-COPY . .
-CMD [ "node", "server.js" ]
 
+# Create the images directory with proper permissions
+RUN mkdir -p /usr/src/app/images && chown -R root:root /usr/src/app/images
+
+COPY . .
+
+CMD [ "node", "server.js" ]

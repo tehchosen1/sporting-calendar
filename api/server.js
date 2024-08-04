@@ -12,7 +12,13 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const IMAGES_DIR = path.join(__dirname, "images");
-fs.mkdir(IMAGES_DIR, { recursive: true });
+(async () => {
+  try {
+    await fs.mkdir(IMAGES_DIR, { recursive: true });
+  } catch (error) {
+    console.error("Error creating images directory:", error);
+  }
+})();
 
 async function downloadImage(url, filename) {
   const imagePath = path.join(IMAGES_DIR, filename);
