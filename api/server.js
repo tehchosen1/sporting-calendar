@@ -55,7 +55,7 @@ async function downloadImage(url, filename) {
         }
       }
 
-      throw new Error(`Failed to download image from all URLs for ${filename}`);
+      // throw new Error(`Failed to download image from all URLs for ${filename}`);
     }
   }
 }
@@ -173,8 +173,8 @@ async function scrapeMatches(month, year) {
     }
     return matches.reverse();
   } catch (error) {
-    console.error("Error in scrapeMatches:", error);
-    throw error;
+    // console.error("Error in scrapeMatches:", error);
+    // throw error;
   } finally {
     if (browser) {
       await browser.close();
