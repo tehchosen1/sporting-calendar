@@ -145,7 +145,7 @@ async function scrapeMatches(month, year) {
     );
 
     for (const match of matches) {
-      console.log(match);
+      // console.log(match);
       if (match.teamIcon) {
         const filename = path.basename(match.teamIcon);
         match.teamIcon = await downloadImage(match.teamIcon, filename);
@@ -295,5 +295,5 @@ app.get("/file-list", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running`);
 });
