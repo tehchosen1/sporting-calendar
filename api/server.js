@@ -4,9 +4,12 @@ const cors = require("cors");
 const fs = require("fs").promises;
 const path = require("path");
 const axios = require("axios");
+const mongoose = require("mongoose");
 const app = express();
 const port = 3001; // Choose an appropriate port
 const dotenv = require("dotenv");
+
+dotenv.config();
 
 const IMAGES_DIR = path.join(__dirname, "images");
 fs.mkdir(IMAGES_DIR, { recursive: true });
@@ -47,6 +50,20 @@ const TEAM_URL =
 const SPORTING_URL =
   "https://www.sporting.pt/pt/futebol/equipa-principal/plantel";
 
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const matchSchema = new mongoose.Schema({
+  date: Date,
+  data: Object,
+});
+
+const Match = mongoose.model("Match", matchSchema);
+
+// Function to scrape matches
 async function scrapeMatches(month, year) {
   let browser;
   browser = await puppeteer.launch({
@@ -154,6 +171,7 @@ async function scrapeMatches(month, year) {
   }
 }
 
+// Function to scrape player images
 async function scrapePlayerImages() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -186,24 +204,29 @@ async function scrapePlayerImages() {
   return playerImageUrls;
 }
 
+// Endpoint to get matches
 app.get("/api/matches/:month/:year", async (req, res) => {
   const { month, year } = req.params;
-  const cacheKey = `${year}-${month.padStart(2, "0")}`;
-
-  if (cache.matches[cacheKey]) {
-    return res.json(cache.matches[cacheKey]);
-  }
+  const queryDate = new Date(year, month - 1);
 
   try {
-    const matches = await scrapeMatches(parseInt(month), parseInt(year));
-    cache.matches[cacheKey] = matches;
-    res.json(matches);
+    let match = await Match.findOne({ date: queryDate });
+
+    console.log(match);
+    if (!match) {
+      const matches = await scrapeMatches(parseInt(month), parseInt(year));
+      match = new Match({ date: queryDate, data: matches });
+      await match.save();
+    }
+
+    res.json(match.data);
   } catch (error) {
     console.error("Error fetching matches:", error);
     res.status(500).json({ error: "Failed to fetch matches" });
   }
 });
 
+// Endpoint to get player images
 app.get("/api/player-image", async (req, res) => {
   if (cache.playerImages.length === 0) {
     try {
@@ -218,6 +241,7 @@ app.get("/api/player-image", async (req, res) => {
   res.json({ imageUrl: cache.playerImages[randomIndex] });
 });
 
+// Endpoint to get images
 app.get("/api/images/:filename", (req, res) => {
   const { filename } = req.params;
   res.sendFile(path.join(IMAGES_DIR, filename));
