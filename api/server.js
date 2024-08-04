@@ -51,7 +51,7 @@ async function downloadImage(url, filename) {
           await fs.writeFile(imagePath, response.data);
           return `${filename}`;
         } catch (staticError) {
-          console.error(`Error downloading from ${staticUrl}:`, staticError);
+          // console.error(`Error downloading from ${staticUrl}:`, staticError);
         }
       }
 
