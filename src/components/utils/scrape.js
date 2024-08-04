@@ -55,7 +55,7 @@ async function downloadPlayerImages() {
           .css("background-image")
           ?.replace("url('", "")
           .replace("')", "") || "";
-      console.log(playerImageUrl);
+      // console.log(playerImageUrl);
       if (playerImageUrl) {
         imageUrls.push(playerImageUrl);
       }
@@ -78,7 +78,7 @@ async function downloadPlayerImages() {
   });
 
   await Promise.all(downloadPromises);
-  console.log("All images downloaded");
+  // console.log("All images downloaded");
 }
 
 downloadPlayerImages().catch(console.error);

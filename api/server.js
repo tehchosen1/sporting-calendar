@@ -20,11 +20,11 @@ async function downloadImage(url, filename) {
   // Check if file already exists
   try {
     await fs.access(imagePath);
-    console.log(`File ${filename} already exists. Skipping download.`);
+    // console.log(`File ${filename} already exists. Skipping download.`);
     return `/api/images/${filename}`;
   } catch {
     // File does not exist, proceed with download
-    console.log(`Downloading ${filename} from ${url}`);
+    // console.log(`Downloading ${filename} from ${url}`);
     const response = await axios.get(url, { responseType: "arraybuffer" });
     await fs.writeFile(imagePath, response.data);
     return `/api/images/${filename}`;
@@ -138,14 +138,14 @@ async function scrapeMatches(month, year) {
         // Check if league icon already exists
         try {
           await fs.access(path.join(IMAGES_DIR, leagueIconFilename));
-          console.log(
-            `League icon for ${match.leagueName} already exists. Skipping download.`
-          );
+          // console.log(
+          //   `League icon for ${match.leagueName} already exists. Skipping download.`
+          // );
           match.leagueIcon = `/api/images/${leagueIconFilename}`;
         } catch {
           // File does not exist, proceed with scraping
           await page.goto(match.leagueHref, { waitUntil: "networkidle0" });
-          console.log("Scraping league icon for:", match.leagueName);
+          // console.log("Scraping league icon for:", match.leagueName);
           const leagueIcon = await page.evaluate(() => {
             const imgElement = document.querySelector(".profile_picture img");
             return imgElement ? imgElement.src : "";
@@ -212,7 +212,7 @@ app.get("/api/matches/:month/:year", async (req, res) => {
   try {
     let match = await Match.findOne({ date: queryDate });
 
-    console.log(match);
+    // console.log(match);
     if (!match) {
       const matches = await scrapeMatches(parseInt(month), parseInt(year));
       match = new Match({ date: queryDate, data: matches });

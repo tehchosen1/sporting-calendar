@@ -41,7 +41,7 @@ async function fetchMatchesForMonthYear(
 
   const matches = await fetchDataFromServer(month, year);
 
-  console.log(matches);
+  // console.log(matches);
   return matches;
 }
 

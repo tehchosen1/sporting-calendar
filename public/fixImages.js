@@ -31,7 +31,7 @@ async function resizeImages() {
   }
 
   if (heights.length === 0) {
-    console.log("No valid image files found.");
+    // console.log("No valid image files found.");
     return;
   }
 
@@ -45,9 +45,9 @@ async function resizeImages() {
 
     try {
       await sharp(inputPath).resize({ height: minHeight }).toFile(outputPath);
-      console.log("Resized image:", file);
+      // console.log("Resized image:", file);
     } catch (err) {
-      console.error(`Error resizing image ${file}:`, err.message);
+      // console.error(`Error resizing image ${file}:`, err.message);
     }
   }
 }
@@ -64,12 +64,12 @@ async function cropImagesToMinWidth() {
       const metadata = await image.metadata();
       widths.push(metadata.width);
     } catch (err) {
-      console.error(`Error processing file ${file}:`, err.message);
+      // console.error(`Error processing file ${file}:`, err.message);
     }
   }
 
   if (widths.length === 0) {
-    console.log("No valid image files found in resized folder.");
+    // console.log("No valid image files found in resized folder.");
     return;
   }
 
@@ -94,9 +94,9 @@ async function cropImagesToMinWidth() {
           height: metadata.height,
         })
         .toFile(outputPath);
-      console.log("Cropped image:", file);
+      // console.log("Cropped image:", file);
     } catch (err) {
-      console.error(`Error cropping image ${file}:`, err.message);
+      // console.error(`Error cropping image ${file}:`, err.message);
     }
   }
 
