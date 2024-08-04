@@ -22,17 +22,41 @@ const IMAGES_DIR = path.join(__dirname, "images");
   }
 })();
 
+const staticUrls = [
+  `https://www.zerozero.pt/img/logos/edicoes/`,
+  `https://www.zerozero.pt/img/logos/competicoes/`,
+  `https://www.zerozero.pt/img/logos/equipas/`,
+];
+
 async function downloadImage(url, filename) {
   const imagePath = path.join(IMAGES_DIR, filename);
 
   // Check if file already exists
   try {
     await fs.access(imagePath);
-    return `/api/images/${filename}`;
+    return `${filename}`;
   } catch {
-    const response = await axios.get(url, { responseType: "arraybuffer" });
-    await fs.writeFile(imagePath, response.data);
-    return `/api/images/${filename}`;
+    try {
+      const response = await axios.get(url, { responseType: "arraybuffer" });
+      await fs.writeFile(imagePath, response.data);
+      return `${filename}`;
+    } catch (error) {
+      // If the image download fails, try the static URLs
+
+      for (const staticUrl of staticUrls) {
+        try {
+          const response = await axios.get(staticUrl + filename, {
+            responseType: "arraybuffer",
+          });
+          await fs.writeFile(imagePath, response.data);
+          return `${filename}`;
+        } catch (staticError) {
+          console.error(`Error downloading from ${staticUrl}:`, staticError);
+        }
+      }
+
+      throw new Error(`Failed to download image from all URLs for ${filename}`);
+    }
   }
 }
 
@@ -121,22 +145,18 @@ async function scrapeMatches(month, year) {
     );
 
     for (const match of matches) {
+      console.log(match);
       if (match.teamIcon) {
-        match.teamIcon = await downloadImage(
-          match.teamIcon,
-          `${match.teamName.replace(/\s+/g, "_")}.png`
-        );
+        const filename = path.basename(match.teamIcon);
+        match.teamIcon = await downloadImage(match.teamIcon, filename);
       }
 
       if (match.leagueHref) {
-        const leagueIconFilename = `league_${match.leagueName.replace(
-          /[\/\s]+/g,
-          "_"
-        )}.png`;
+        const leagueIconFilename = `league_${path.basename(match.leagueIcon)}`;
 
         try {
           await fs.access(path.join(IMAGES_DIR, leagueIconFilename));
-          match.leagueIcon = `/api/images/${leagueIconFilename}`;
+          match.leagueIcon = `/api/images${leagueIconFilename}`;
         } catch {
           await page.goto(match.leagueHref, { waitUntil: "networkidle0" });
           const leagueIcon = await page.evaluate(() => {
@@ -145,10 +165,8 @@ async function scrapeMatches(month, year) {
           });
 
           if (leagueIcon) {
-            match.leagueIcon = await downloadImage(
-              leagueIcon,
-              leagueIconFilename
-            );
+            const filename = path.basename(leagueIcon);
+            match.leagueIcon = await downloadImage(leagueIcon, filename);
           }
         }
       }
@@ -240,34 +258,30 @@ app.get("/api/images/:filename", async (req, res) => {
 
   try {
     await fs.access(imagePath);
-    res.sendFile(imagePath);
   } catch (error) {
-    // Attempt to redownload the image if it does not exist
+    // Image does not exist, redownload it
     try {
       const match = await Match.findOne({
-        "data.teamIcon": `/api/images/${filename}`,
+        $or: [{ "data.teamIcon": filename }, { "data.leagueIcon": filename }],
       });
       if (match) {
         const matchData = match.data.find(
-          (m) =>
-            `/api/images/${filename}` === m.teamIcon ||
-            `/api/images/${filename}` === m.leagueIcon
+          (m) => filename === m.teamIcon || filename === m.leagueIcon
         );
         const imageUrl = matchData
           ? matchData.teamIcon || matchData.leagueIcon
           : null;
 
         if (imageUrl) {
-          const downloadedImagePath = await downloadImage(imageUrl, filename);
-          return res.sendFile(path.join(__dirname, downloadedImagePath));
+          await downloadImage(imageUrl, filename);
         }
       }
     } catch (downloadError) {
       console.error("Error redownloading image:", downloadError);
     }
-
-    res.status(404).send("Image not found");
   }
+
+  res.sendFile(imagePath);
 });
 
 app.get("/file-list", async (req, res) => {

@@ -47,6 +47,7 @@ const App: React.FC = () => {
                 <div className="column">
                   <div className="skeleton_match" />
                   <div className="skeleton_match" />
+                  <div className="skeleton_match" />
                 </div>
               </div>
             ) : selectedMatch ? (

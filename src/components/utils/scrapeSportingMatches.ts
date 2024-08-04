@@ -58,12 +58,8 @@ export const fetchMatchesForMonthYear = async (
       }
       const updatedMatches = matches.map((match) => ({
         ...match,
-        teamIcon: `${API_BASE_URL}/images/${encodeURIComponent(
-          match.teamName.replace(/\s+/g, "_")
-        )}.png`,
-        leagueIcon: `${API_BASE_URL}/images/league_${encodeURIComponent(
-          match.leagueName.replace(/\s+/g, "_")
-        )}.png`,
+        teamIcon: `${API_BASE_URL}/images/${match.teamIcon}`,
+        leagueIcon: `${API_BASE_URL}/images/${match.leagueIcon}`,
       }));
       return updatedMatches;
     } catch (error) {
