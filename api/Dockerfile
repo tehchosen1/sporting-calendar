@@ -8,8 +8,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 
-# Create the images directory with proper permissions
-RUN mkdir -p /usr/src/app/images && chown -R root:root /usr/src/app/images
+# Create the images directory
+RUN mkdir -p /usr/src/app/images
 
 COPY . .
 
