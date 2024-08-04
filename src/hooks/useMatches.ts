@@ -32,7 +32,9 @@ const useMatches = () => {
       const matchesInCorrectOrder = scrapedMatches;
       setMatches(matchesInCorrectOrder);
       if (typeof window !== "undefined") {
-        localStorage.setItem(key, JSON.stringify(matchesInCorrectOrder));
+        if (scrapedMatches.length > 0) {
+          localStorage.setItem(key, JSON.stringify(matchesInCorrectOrder));
+        }
       }
       setIsLoading(false);
     };

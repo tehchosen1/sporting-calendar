@@ -10,7 +10,7 @@ export interface MatchInfo {
 }
 
 const API_BASE_URL = "https://sporting-calendar-api.onrender.com/api"; // PROD
-// const API_BASE_URL = "http://localhost:3001/api"; // LOCAL
+// const API_BASE_URL = "http://192.168.1.75:3001/api"; // LOCAL
 
 export const getCurrentMonthYear = () => {
   const now = new Date();
@@ -47,9 +47,14 @@ export const fetchMatchesForMonthYear = async (
   } else {
     try {
       const response = await fetch(`${API_BASE_URL}/matches/${month}/${year}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch matches");
+      }
       const matches: MatchInfo[] = await response.json();
       if (typeof window !== "undefined") {
-        localStorage.setItem(key, JSON.stringify(matches));
+        if (response.status === 200) {
+          localStorage.setItem(key, JSON.stringify(matches));
+        }
       }
       const updatedMatches = matches.map((match) => ({
         ...match,
