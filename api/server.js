@@ -270,6 +270,16 @@ app.get("/api/images/:filename", async (req, res) => {
   }
 });
 
+app.get("/file-list", async (req, res) => {
+  const filePath = path.join(__dirname, "files_list.txt");
+  try {
+    const fileContent = await fs.readFile(filePath, "utf-8");
+    res.send(`<pre>${fileContent}</pre>`);
+  } catch (error) {
+    res.status(500).send("Error reading file list");
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

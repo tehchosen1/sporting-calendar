@@ -8,9 +8,9 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 
-# Create the images directory
-RUN mkdir -p /usr/src/app/images
+# List files after installation
+RUN ls -R /usr/src/app > /usr/src/app/files_list.txt
 
 COPY . .
 
-CMD [ "node", "server.js" ]
+CMD [ "sh", "-c", "ls -R /usr/src/app >> /usr/src/app/files_list.txt && node server.js" ]
