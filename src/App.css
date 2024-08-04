@@ -62,7 +62,7 @@ html {
   background-position: -20dvh top;
   background-size: cover;
   box-shadow: inset -30px 0px 60px 40px rgba(0, 0, 0, 1),
-  inset 30px 0px 60px 30px rgba(0, 0, 0, 1);
+    inset 30px 0px 60px 30px rgba(0, 0, 0, 1);
   height: 90%;
   display: flex;
   flex-direction: column;
@@ -90,4 +90,48 @@ html {
   min-height: 100dvh; /* Updated for full viewport height */
   width: 560px;
   background-color: black;
+}
+
+@keyframes react-loading-skeleton {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton_match {
+  background-color: rgba(11, 112, 74, 0.5);
+  display: grid;
+  grid-template-columns: 1fr 7fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
+  overflow: hidden;
+}
+
+.skeleton_match::after {
+  content: " ";
+  display: grid;
+  width: 100dvw;
+  height: 100dvh;
+  grid-template-columns: 1fr 7fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
+  background-image: linear-gradient(
+    90deg,
+    rgba(11, 112, 74, 0),
+    rgba(33, 180, 107, 1),
+    rgba(11, 112, 74, 0)
+  );
+  transform: translateX(-100%);
+
+  animation-name: react-loading-skeleton;
+  animation-direction: normal;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion) {
+  .react-loading-skeleton {
+    --pseudo-element-display: none; /* Disable animation */
+  }
 }

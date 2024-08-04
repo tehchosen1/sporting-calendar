@@ -1,5 +1,6 @@
 /* src/components/Match.css */
-.match {
+.match,
+.skeleton_match {
   display: grid;
   /* width: 320px; */
   height: 85px;
@@ -24,7 +25,8 @@
   src: local("kenyan coffee rg"),
     url(../../public/kenyan\ coffee\ rg.otf) format("woff");
 }
-.match-list-container-1 .match {
+.match-list-container-1 .match,
+.match-list-container-1 .skeleton_match {
   width: 300px;
 }
 .match-field {
@@ -154,7 +156,8 @@
 }
 
 @media (max-width: 560px) {
-  .match {
+  .match,
+  .skeleton_match {
     display: grid;
     /* width: 320px; */
     height: 75px;
@@ -163,7 +166,8 @@
     text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
   }
 
-  .match-list-container-1 .match {
+  .match-list-container-1 .match,
+  .match-list-container-1 .skeleton_match {
     width: 225px;
   }
   .match-day {

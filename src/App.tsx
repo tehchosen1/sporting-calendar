@@ -7,6 +7,7 @@ import useBackgroundImage from "./hooks/useBackgroundImage";
 import "./App.css";
 import { MatchInfo } from "./components/utils/scrapeSportingMatches2";
 import MatchDetails from "./components/MatchDetails";
+import Skeleton from "react-loading-skeleton";
 
 const App: React.FC = () => {
   const backgroundImageUrl = useBackgroundImage();
@@ -42,20 +43,11 @@ const App: React.FC = () => {
           />
           <main className="content">
             {isLoading ? (
-              <div
-                className="loading"
-                style={{
-                  color: "white",
-                  fontFamily: "kenyan coffee rg",
-                  width: "100%",
-                  height: "100%",
-                  fontSize: "3rem",
-                  textAlign: "center",
-                  zIndex: 1000,
-                  textShadow: "rgba(0, 0, 0, 0.15) 2px 2px 0px",
-                }}
-              >
-                Carregando jogos...
+              <div className={`match-list-container-1`} style={{ zIndex: 1 }}>
+                <div className="column">
+                  <div className="skeleton_match" />
+                  <div className="skeleton_match" />
+                </div>
               </div>
             ) : selectedMatch ? (
               <MatchDetails
