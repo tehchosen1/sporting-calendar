@@ -12,6 +12,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const IMAGES_DIR = path.join(__dirname, "images");
+
+// Ensure the directory exists on server start
 (async () => {
   try {
     await fs.mkdir(IMAGES_DIR, { recursive: true });
@@ -26,11 +28,8 @@ async function downloadImage(url, filename) {
   // Check if file already exists
   try {
     await fs.access(imagePath);
-    // console.log(`File ${filename} already exists. Skipping download.`);
     return `/api/images/${filename}`;
   } catch {
-    // File does not exist, proceed with download
-    // console.log(`Downloading ${filename} from ${url}`);
     const response = await axios.get(url, { responseType: "arraybuffer" });
     await fs.writeFile(imagePath, response.data);
     return `/api/images/${filename}`;
@@ -39,17 +38,14 @@ async function downloadImage(url, filename) {
 
 app.use(
   cors({
-    origin: "*", // Allow only your frontend origin
-    methods: ["GET"], // Allow only GET requests
+    origin: "*",
+    methods: ["GET"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
 // In-memory cache
-const cache = {
-  matches: {},
-  playerImages: [],
-};
+const cache = { matches: {}, playerImages: [] };
 
 const TEAM_URL =
   "https://www.zerozero.pt/equipa/sporting/jogos?grp=0&equipa_1=16&menu=allmatches";
@@ -62,17 +58,12 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 
-const matchSchema = new mongoose.Schema({
-  date: Date,
-  data: Object,
-});
-
+const matchSchema = new mongoose.Schema({ date: Date, data: Object });
 const Match = mongoose.model("Match", matchSchema);
 
 // Function to scrape matches
 async function scrapeMatches(month, year) {
-  let browser;
-  browser = await puppeteer.launch({
+  let browser = await puppeteer.launch({
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
@@ -85,6 +76,7 @@ async function scrapeMatches(month, year) {
         ? process.env.PUPPETEER_EXECUTABLE_PATH
         : puppeteer.executablePath(),
   });
+
   try {
     const page = await browser.newPage();
     await page.setUserAgent(
@@ -127,6 +119,7 @@ async function scrapeMatches(month, year) {
       month,
       year
     );
+
     for (const match of matches) {
       if (match.teamIcon) {
         match.teamIcon = await downloadImage(
@@ -141,17 +134,11 @@ async function scrapeMatches(month, year) {
           "_"
         )}.png`;
 
-        // Check if league icon already exists
         try {
           await fs.access(path.join(IMAGES_DIR, leagueIconFilename));
-          // console.log(
-          //   `League icon for ${match.leagueName} already exists. Skipping download.`
-          // );
           match.leagueIcon = `/api/images/${leagueIconFilename}`;
         } catch {
-          // File does not exist, proceed with scraping
           await page.goto(match.leagueHref, { waitUntil: "networkidle0" });
-          // console.log("Scraping league icon for:", match.leagueName);
           const leagueIcon = await page.evaluate(() => {
             const imgElement = document.querySelector(".profile_picture img");
             return imgElement ? imgElement.src : "";
@@ -160,7 +147,7 @@ async function scrapeMatches(month, year) {
           if (leagueIcon) {
             match.leagueIcon = await downloadImage(
               leagueIcon,
-              `league_${match.leagueName.replace(/[\/\s]+/g, "_")}.png`
+              leagueIconFilename
             );
           }
         }
@@ -218,7 +205,6 @@ app.get("/api/matches/:month/:year", async (req, res) => {
   try {
     let match = await Match.findOne({ date: queryDate });
 
-    // console.log(match);
     if (!match) {
       const matches = await scrapeMatches(parseInt(month), parseInt(year));
       match = new Match({ date: queryDate, data: matches });
@@ -248,9 +234,40 @@ app.get("/api/player-image", async (req, res) => {
 });
 
 // Endpoint to get images
-app.get("/api/images/:filename", (req, res) => {
+app.get("/api/images/:filename", async (req, res) => {
   const { filename } = req.params;
-  res.sendFile(path.join(IMAGES_DIR, filename));
+  const imagePath = path.join(IMAGES_DIR, filename);
+
+  try {
+    await fs.access(imagePath);
+    res.sendFile(imagePath);
+  } catch (error) {
+    // Attempt to redownload the image if it does not exist
+    try {
+      const match = await Match.findOne({
+        "data.teamIcon": `/api/images/${filename}`,
+      });
+      if (match) {
+        const matchData = match.data.find(
+          (m) =>
+            `/api/images/${filename}` === m.teamIcon ||
+            `/api/images/${filename}` === m.leagueIcon
+        );
+        const imageUrl = matchData
+          ? matchData.teamIcon || matchData.leagueIcon
+          : null;
+
+        if (imageUrl) {
+          const downloadedImagePath = await downloadImage(imageUrl, filename);
+          return res.sendFile(path.join(__dirname, downloadedImagePath));
+        }
+      }
+    } catch (downloadError) {
+      console.error("Error redownloading image:", downloadError);
+    }
+
+    res.status(404).send("Image not found");
+  }
 });
 
 app.listen(port, () => {
