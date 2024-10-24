@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import fetchMatchesForMonthYear, {
   MatchInfo,
 } from "../components/utils/scrapeSportingMatches";
-import { is } from "cheerio/lib/api/traversing";
 
 const useMatches = () => {
   const [matches, setMatches] = useState<MatchInfo[]>([]);

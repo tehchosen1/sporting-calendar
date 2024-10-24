@@ -10,12 +10,18 @@ import MatchDetails from "./components/MatchDetails";
 import Skeleton from "react-loading-skeleton";
 
 const App: React.FC = () => {
-  const backgroundImageUrl = useBackgroundImage();
+const { backgroundImageUrl, fetchBackgroundImage } = useBackgroundImage();
+const [currentMonth, setCurrentMonth] = useState<number>(
+  new Date().getMonth() + 1
+);
   const { matches, selectedMonth, selectedYear, setMonth, setYear, isLoading } =
     useMatches();
   const [selectedMatch, setSelectedMatch] = useState<MatchInfo | null>(null);
   const [numberOfColumns, setNumberOfColumns] = useState(1);
-
+  const handleMonthChange = (newMonth: number) => {
+    setCurrentMonth(newMonth);
+    fetchBackgroundImage();
+  };
   const handleMatchClick = (match: MatchInfo) => {
     setSelectedMatch(match);
   };
@@ -40,6 +46,7 @@ const App: React.FC = () => {
             selectedYear={selectedYear}
             setMonth={setMonth}
             setYear={setYear}
+            onMonthChange={handleMonthChange}
           />
           <main className="content">
             {isLoading ? (
