@@ -6,13 +6,20 @@ interface HeaderProps {
   selectedYear: number;
   setMonth: (month: number) => void;
   setYear: (year: number) => void;
+  onMonthChange: (newMonth: number) => void;
 }
 
 const calendarText = "Calendário de Futebol";
 
-const Header: React.FC<HeaderProps> = ({ selectedMonth, setMonth }) => {
-  const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setMonth(parseInt(event.target.value));
+const Header: React.FC<HeaderProps> = ({
+  selectedMonth,
+  setMonth,
+  onMonthChange,
+}) => {
+  const handleMonthSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newMonth = parseInt(event.target.value, 10);
+    onMonthChange(newMonth);
+    setMonth(newMonth);
   };
 
   const renderOptionsForMonth = () => {
@@ -37,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ selectedMonth, setMonth }) => {
           <select
             className="header-month-text"
             value={selectedMonth}
-            onChange={handleMonthChange}
+            onChange={handleMonthSelect}
           >
             {renderOptionsForMonth()}
           </select>

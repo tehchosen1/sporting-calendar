@@ -8,70 +8,78 @@ const useBackgroundImage = () => {
     [key: string]: number;
   }>({});
 
-  useEffect(() => {
-    const fetchBackgroundImage = async () => {
-      try {
-        const response = await fetch("/photos.json");
-        const imagePaths: string[] = await response.json();
+  const importAll = (r: __WebpackModuleApi.RequireContext) => {
+    return r.keys().map(r);
+  };
 
-        if (imagePaths.length > 0) {
-          let storedUsageCount = JSON.parse(
-            localStorage.getItem("imageUsageCount") || "{}"
-          );
+  const fetchBackgroundImage = async () => {
+    try {
+      const imagePaths: string[] = importAll(
+        require.context(
+          "../../public/photos/cropped/",
+          true,
+          /\.(png|jpe?g|svg)$/
+        )
+      ) as string[];
 
-          // Initialize usage count for all images to 0 if not already set
-          imagePaths.forEach((image) => {
-            if (storedUsageCount[image] === undefined) {
-              storedUsageCount[image] = 0;
-            }
-          });
+      if (imagePaths.length > 0) {
+        let storedUsageCount = JSON.parse(
+          localStorage.getItem("imageUsageCount") || "{}"
+        );
 
-          // Check if all images have been used once
-          const allUsedOnce = imagePaths.every(
-            (image) => storedUsageCount[image] === 1
-          );
-
-          if (allUsedOnce) {
-            // Reset usage counts
-            storedUsageCount = imagePaths.reduce((acc, image) => {
-              acc[image] = 0;
-              return acc;
-            }, {} as { [key: string]: number });
+        // Initialize usage count for all images to 0 if not already set
+        imagePaths.forEach((image) => {
+          if (storedUsageCount[image] === undefined) {
+            storedUsageCount[image] = 0;
           }
+        });
 
-          setImageUsageCount(storedUsageCount);
-          localStorage.setItem(
-            "imageUsageCount",
-            JSON.stringify(storedUsageCount)
-          );
+        // Check if all images have been used once
+        const allUsedOnce = imagePaths.every(
+          (image) => storedUsageCount[image] === 1
+        );
 
-          // Select a new background image
-          const selectedImage = getWeightedRandomImage(
-            imagePaths,
-            storedUsageCount
-          );
-          setBackgroundImageUrl(selectedImage);
-
-          // Update the usage count for the selected image
-          const updatedUsageCount = {
-            ...storedUsageCount,
-            [selectedImage]: (storedUsageCount[selectedImage] || 0) + 1,
-          };
-          setImageUsageCount(updatedUsageCount);
-          localStorage.setItem(
-            "imageUsageCount",
-            JSON.stringify(updatedUsageCount)
-          );
+        if (allUsedOnce) {
+          // Reset usage counts
+          storedUsageCount = imagePaths.reduce((acc, image) => {
+            acc[image] = 0;
+            return acc;
+          }, {} as { [key: string]: number });
         }
-      } catch (error) {
-        console.error("Failed to fetch background images:", error);
-      }
-    };
 
+        setImageUsageCount(storedUsageCount);
+        localStorage.setItem(
+          "imageUsageCount",
+          JSON.stringify(storedUsageCount)
+        );
+
+        // Select a new background image
+        const selectedImage = getWeightedRandomImage(
+          imagePaths,
+          storedUsageCount
+        );
+        setBackgroundImageUrl(selectedImage);
+
+        // Update the usage count for the selected image
+        const updatedUsageCount = {
+          ...storedUsageCount,
+          [selectedImage]: (storedUsageCount[selectedImage] || 0) + 1,
+        };
+        setImageUsageCount(updatedUsageCount);
+        localStorage.setItem(
+          "imageUsageCount",
+          JSON.stringify(updatedUsageCount)
+        );
+      }
+    } catch (error) {
+      console.error("Failed to fetch background images:", error);
+    }
+  };
+  useEffect(() => {
     fetchBackgroundImage();
   }, []);
 
-  return backgroundImageUrl;
+  return { backgroundImageUrl, fetchBackgroundImage };
 };
 
 const getWeightedRandomImage = (
