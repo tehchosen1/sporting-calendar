@@ -48,7 +48,7 @@ export const fetchMatchesForMonthYear = async (
     try {
       const response = await fetch(`${API_BASE_URL}/matches/${month}/${year}`);
       if (!response.ok) {
-        throw new Error("Failed to fetch matches");
+        // throw new Error("Failed to fetch matches");
       }
       const matches: MatchInfo[] = await response.json();
       if (typeof window !== "undefined") {
