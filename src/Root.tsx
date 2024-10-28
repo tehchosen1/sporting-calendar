@@ -4,10 +4,12 @@ import App from "./App";
 import MatchTest from "./MatchTest";
 
 const Root: React.FC = () => (
-  <Routes>
-    <Route path="/" Component={App} />
-    <Route path="/match-test" Component={MatchTest} />
-  </Routes>
+  <Router>
+    <Routes>
+      <Route path="/" Component={App} />
+      <Route path="/match-test" Component={MatchTest} />
+    </Routes>
+  </Router>
 );
 
 export default Root;
