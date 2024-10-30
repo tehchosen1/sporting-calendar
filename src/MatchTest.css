@@ -1,0 +1,379 @@
+/* Global styles */
+
+@font-face {
+  font-family: "DIN Web W07 Cond Black";
+  src: local("DIN Web W07 Cond Black"),
+    url(../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
+}
+@font-face {
+  font-family: "DIN Web W07 Cond Bold";
+  src: local("DIN Web W07 Cond Bold"),
+    url(../public/DIN\ Web\ W07\ Cond\ Bold.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "DIN Web W07 Cond";
+  src: local("DIN Web W07 Cond"),
+    url(../public/DIN\ Web\ W07\ Cond.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "DIN Web W07 Black";
+  src: local("DIN Web W07 Black"),
+    url(../public/DIN\ Web\ W07\ Black.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "DIN Web W07 Italic";
+  src: local("DIN Web W07 Italic"),
+    url(../public/DIN\ Web\ W07\ Italic.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "kenyan coffee rg";
+  src: local("kenyan coffee rg"),
+    url(../public/kenyan\ coffee\ rg.otf) format("woff");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css";
+body,
+html {
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  background-color: rgba(0, 0, 0, 1);
+  overflow-y: hidden;
+}
+
+.App {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: multiply;
+  margin: 0 auto;
+  z-index: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: black;
+}
+
+.footer {
+  margin-bottom: 50px;
+}
+
+.backgroundImg {
+  background: url("../public/estadio-alvalade.jpg") rgba(76, 175, 80, 0.3)
+    no-repeat center center;
+  background-size: 220vh;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+}
+
+.background-tint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(11, 112, 74, 0.5);
+  z-index: 1; /* Ensure it's above the background */
+}
+.background-tint-black {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  z-index: 2;
+}
+
+.content {
+  word-break: break-all;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
+  margin: auto;
+  min-height: 100dvh; /* Updated for full viewport height */
+  background-color: black;
+  overflow: hidden;
+  /* width: 560px; */
+}
+
+.container {
+  margin: auto;
+  min-height: 100dvh; /* Updated for full viewport height */
+  width: 560px;
+  background-color: black;
+}
+
+@keyframes react-loading-skeleton {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton_match {
+  background-color: rgba(11, 112, 74, 0.5);
+  display: grid;
+  grid-template-columns: 1fr 7fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
+  overflow: hidden;
+}
+
+.skeleton_match::after {
+  content: " ";
+  display: grid;
+  width: 100dvw;
+  height: 100dvh;
+  grid-template-columns: 1fr 7fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
+  background-image: linear-gradient(
+    90deg,
+    rgba(11, 112, 74, 0),
+    rgba(33, 180, 107, 1),
+    rgba(11, 112, 74, 0)
+  );
+  transform: translateX(-100%);
+
+  animation-name: react-loading-skeleton;
+  animation-direction: normal;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion) {
+  .react-loading-skeleton {
+    --pseudo-element-display: none; /* Disable animation */
+  }
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.league-logo {
+}
+
+.taca-liga {
+  background: url("../public/taca-da-liga.png") no-repeat center center;
+  background-size: cover;
+  mix-blend-mode: color-dodge;
+  opacity: 0.75;
+  position: absolute;
+  width: 400px;
+  height: 800px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ensure it stays above the background but below main content */
+}
+
+.liga-campeoes {
+  background-size: cover;
+  mix-blend-mode: color-dodge;
+  opacity: 0.75;
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  top: 50%;
+  left: 15%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ensure it stays above the background but below main content */
+}
+
+.blue {
+  position: absolute;
+  background-color: rgb(0 0 124);
+  filter: blur(50px);
+  border-radius: 500px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.liga-campeoes-logo {
+  position: absolute;
+  background: url("../public/liga-campeoes_blue.png") no-repeat center center;
+  background-size: cover;
+  z-index: 2;
+  border-radius: 500px;
+  width: 100%;
+  height: 100%;
+}
+
+.main-content {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-logo {
+  background: url("../public/sporting.png") no-repeat center center;
+  background-size: cover;
+  width: 140px;
+  height: 140px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.away-logo {
+  background: url("../public/nacional.png") no-repeat center center;
+  background-size: cover;
+  width: 140px;
+  height: 140px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.content-container {
+  z-index: 2;
+  width: 560px;
+  text-align: left;
+  color: white;
+}
+
+.dropdown-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+  z-index: 2;
+  width: 560px;
+  text-align: left;
+  color: white;
+}
+
+.league-name {
+  margin-left: 12%;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-family: "DIN Web W07 Cond Bold";
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.sporting-label {
+  background: url("../public/sporting_label-01.png") no-repeat center center;
+  background-size: contain;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+  width: 100%;
+  height: 120px;
+  margin: 0px 0;
+}
+
+.generic-label {
+  font-family: "DIN Web W07 Cond Black";
+  font-size: 40px;
+  display: inline-block;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.vs {
+  font-family: "DIN Web W07 Cond";
+  font-size: 40px;
+  display: inline-block;
+  margin: 0 5px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.centered-text {
+  text-align: center;
+  font-family: "DIN Web W07 Cond Bold";
+  margin: 10px 0;
+}
+
+.team-text {
+  text-align: center;
+}
+
+.team-names-container {
+  margin: 10px 0;
+}
+
+.match-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-text {
+  text-align: center;
+  background: transparent;
+  border: 0px;
+  color: white;
+  font-family: "DIN Web W07 Cond Bold";
+  font-size: 45px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.league-input {
+  width: 100%;
+  background: transparent;
+  border: 0px;
+  color: white;
+}
+
+::placeholder {
+  color: white;
+}
+
+.stadium-text {
+  font-size: 30px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+.sandwiched-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+  font-family: "kenyan coffee rg";
+  font-size: 25px;
+}
+
+.extra-text {
+  width: auto;
+  text-align: center;
+  background: transparent;
+  border: 0px;
+  color: white;
+  font-family: "kenyan coffee rg";
+  font-size: 25px;
+}
+
+.sandwiched-text::before,
+.sandwiched-text::after {
+  content: "";
+  flex: 1;
+  height: 5px; /* Configurable height */
+  background: white;
+  margin: 0 20px; /* Configurable width */
+}
