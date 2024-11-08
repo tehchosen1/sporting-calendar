@@ -195,11 +195,11 @@ html {
   mix-blend-mode: color-dodge;
   opacity: 0.75;
   position: absolute;
-  width: 800px;
-  height: 800px;
+  width: 1000px;
+  height: 1000px;
   top: 50%;
   left: 15%;
-  transform: translate(-50%, -50%);
+  transform: translate(-56%, -50%);
   z-index: 1; /* Ensure it stays above the background but below main content */
 }
 

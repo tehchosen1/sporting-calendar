@@ -91,10 +91,10 @@ const MatchTestPage: React.FC = () => {
         <div className="background-tint">
           <div className="league-logo">
             {/* <div className="taca-liga" /> */}
-            {/* <div className="liga-campeoes">
+            <div className="liga-campeoes">
               <div className="liga-campeoes-logo" />
               <div className="blue" />
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
@@ -102,6 +102,7 @@ const MatchTestPage: React.FC = () => {
         <div className="content-container">
           <div className="league-name">
             <input
+              spellCheck={false}
               type="text"
               className="league-input"
               defaultValue={"ALLIANZ CUP 24/25 | QUARTOS-DE-FINAL"}
@@ -186,6 +187,7 @@ const MatchTestPage: React.FC = () => {
           </div>
           <div className="match-date">
             <input
+              spellCheck={false}
               className="date-text"
               defaultValue={currentDate}
               placeholder={currentDate}
