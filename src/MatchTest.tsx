@@ -19,6 +19,7 @@ const MatchTestPage: React.FC = () => {
   const [homeTeam, setHomeTeam] = useState<Team | null>(null);
   const [awayTeam, setAwayTeam] = useState<Team | null>(null);
   const [whereSportingPlays, setWhereSportingPlays] = useState<number>(1);
+  const [leagueInputValue, setLeagueInputValue] = useState("");
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -84,17 +85,29 @@ const MatchTestPage: React.FC = () => {
     }
   };
 
+  const handleLeagueInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLeagueInputValue(e.target.value);
+  };
+
   return (
     <div>
       <div className="backgroundImg">
+        <div className="background-special" />
         <div className="background-tint-black" />
         <div className="background-tint">
           <div className="league-logo">
-            {/* <div className="taca-liga" /> */}
-            <div className="liga-campeoes">
-              <div className="liga-campeoes-logo" />
-              <div className="blue" />
-            </div>
+            {}
+            {/* switch (leagueInputValue) {
+              case leagueInputValue.includes("Taça"):
+                <div className="taca-liga" />;
+                break;
+              case leagueInputValue.includes("Campeoes"):
+                <div className="liga-campeoes">
+                  <div className="liga-campeoes-logo" />
+                  <div className="blue" />
+                </div>;
+                break;
+            } */}
           </div>
         </div>
       </div>
@@ -106,6 +119,8 @@ const MatchTestPage: React.FC = () => {
               type="text"
               className="league-input"
               defaultValue={"ALLIANZ CUP 24/25 | QUARTOS-DE-FINAL"}
+              value={leagueInputValue}
+              onChange={handleLeagueInputChange}
             />
           </div>
           <div className="team-names-container">
@@ -207,6 +222,30 @@ const MatchTestPage: React.FC = () => {
           </div>
           <div className="sandwiched-text" contentEditable="true">
             VEM ASSISTIR NO NÚCLEO
+          </div>
+          <div className="special-text" contentEditable="true">
+            <p
+              style={{
+                fontFamily: "DIN Web W07 Cond Bold",
+                fontSize: "large",
+                width: "80%",
+                margin: "0 auto",
+              }}
+            >
+              {" "}
+              NO OUTRO DIA, EU FUI A BRAGA, VI UM TREINADOR QUE ME AGRADAVA, NÃO
+              TINHA CURSO, NÃO ME IMPORTEI, DEI 10 MILHÕES POR MBWAY
+            </p>
+            <p
+              style={{
+                fontFamily: "DIN Web W07 Black",
+                fontSize: "larger",
+                width: "100%",
+                marginTop: "10px",
+              }}
+            >
+              RÚBEN AMORIM, RÚBEN AMORIM, RÚBEN AMORIM
+            </p>
           </div>
         </div>
       </div>

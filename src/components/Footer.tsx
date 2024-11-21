@@ -13,7 +13,7 @@ const getRandomQuote = () => {
 };
 
 const Footer: React.FC = () => {
-  const randomTxt = getRandomQuote(); // Use the function to get a random quote
+  const randomTxt = getRandomQuote();
   return (
     <footer className="footer">
       <div className="footer-background">
