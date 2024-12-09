@@ -165,8 +165,8 @@ const MatchTestPage: React.FC = () => {
               spellCheck={false}
               type="text"
               className="league-input"
-              value={leagueName.toUpperCase()}
-              placeholder="League Name"
+              defaultValue={"Taça de Portugal 24/25 | 4ª Eliminatória"}
+              value={leagueInputValue.toUpperCase()}
               onChange={handleLeagueInputChange}
             />
           </div>
@@ -251,12 +251,21 @@ const MatchTestPage: React.FC = () => {
             <input
               spellCheck={false}
               className="date-text"
-              value={matchDate}
-              placeholder="Date"
+              defaultValue={currentDate}
+              placeholder={currentDate}
             />
           </div>
+
+          {/* <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            showTimeSelect
+            dateFormat={"dd MMMM '|' HH'H'mm"}
+            locale="pt-PT"
+            className="date-picker date-text"
+          /> */}
           <div className={`centered-text stadium-text`} contentEditable="true">
-            {stadium}
+            Estádio José de Alvalade
           </div>
           <div className="sandwiched-text" contentEditable="true">
             VEM ASSISTIR NO NÚCLEO
