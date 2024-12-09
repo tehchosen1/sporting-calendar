@@ -40,28 +40,6 @@ const MatchTestPage: React.FC = () => {
     fetchTeams();
   }, []);
 
-  const [matches, setMatches] = useState<MatchInfo[]>([]);
-  const [matchDate, setMatchDate] = useState<string>("");
-  const [stadium, setStadium] = useState<string>("");
-  const [leagueName, setLeagueName] = useState<string>("");
-
-  useEffect(() => {
-    const fetchMatches = async () => {
-      try {
-        const response = await fetch("/matches.json");
-        if (!response.ok) {
-          throw new Error("matches.json not found");
-        }
-        const data = await response.json();
-        setMatches(data);
-      } catch (error) {
-        console.error("Error loading matches:", error);
-      }
-    };
-
-    fetchMatches();
-  }, []);
-
   const formatDateString = (date: Date | null): string => {
     if (!date) return "";
     return date
@@ -89,38 +67,14 @@ const MatchTestPage: React.FC = () => {
     setAwayDropdownVisible(!isAwayDropdownVisible);
   };
 
-  const handleTeamSelect = (homeTeam: Team | null, awayTeam: Team | null) => {
-    if (homeTeam && awayTeam) {
-      const now = new Date();
-      const relevantMatch = matches
-        .filter(
-          (match) =>
-            (match.teamName === homeTeam.name &&
-              match.opponentName === awayTeam.name) ||
-            (match.teamName === awayTeam.name &&
-              match.opponentName === homeTeam.name)
-        )
-        .filter((match) => new Date(match.date) <= now)
-        .sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-        )[0];
-
-      if (relevantMatch) {
-        setMatchDate(relevantMatch.date);
-        setStadium(relevantMatch.field);
-        setLeagueName(relevantMatch.leagueName);
-      }
-    }
-  };
-
   const handleHomeTeamSelect = (team: Team) => {
     setHomeTeam(team);
-    handleTeamSelect(team, awayTeam);
+    updateWhereSportingPlays(team, awayTeam);
   };
 
   const handleAwayTeamSelect = (team: Team) => {
     setAwayTeam(team);
-    handleTeamSelect(homeTeam, team);
+    updateWhereSportingPlays(homeTeam, team);
   };
 
   const updateWhereSportingPlays = (home: Team | null, away: Team | null) => {
