@@ -1,9 +1,5 @@
 [
   {
-    "name": "Sporting CP",
-    "logo": "https://www.zerozero.pt/img/logos/equipas/16_imgbank_1722518934.png"
-  },
-  {
     "name": "Vitória SC",
     "logo": "https://www.zerozero.pt/img/logos/equipas/18_imgbank_1691672368.png"
   },
@@ -106,9 +102,5 @@
   {
     "name": "PSV",
     "logo": "https://www.zerozero.pt/img/logos/equipas/147_imgbank_1687180569.png"
-  },
-  {
-    "name": "Lille",
-    "logo": "https://www.zerozero.pt/img/logos/equipas/120_imgbank_1684488013.png"
   }
 ]

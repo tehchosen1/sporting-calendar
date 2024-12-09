@@ -40,6 +40,28 @@ const MatchTestPage: React.FC = () => {
     fetchTeams();
   }, []);
 
+  const [matches, setMatches] = useState<MatchInfo[]>([]);
+  const [matchDate, setMatchDate] = useState<string>("");
+  const [stadium, setStadium] = useState<string>("");
+  const [leagueName, setLeagueName] = useState<string>("");
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const response = await fetch("/matches.json");
+        if (!response.ok) {
+          throw new Error("matches.json not found");
+        }
+        const data = await response.json();
+        setMatches(data);
+      } catch (error) {
+        console.error("Error loading matches:", error);
+      }
+    };
+
+    fetchMatches();
+  }, []);
+
   const formatDateString = (date: Date | null): string => {
     if (!date) return "";
     return date
@@ -67,14 +89,38 @@ const MatchTestPage: React.FC = () => {
     setAwayDropdownVisible(!isAwayDropdownVisible);
   };
 
+  const handleTeamSelect = (homeTeam: Team | null, awayTeam: Team | null) => {
+    if (homeTeam && awayTeam) {
+      const now = new Date();
+      const relevantMatch = matches
+        .filter(
+          (match) =>
+            (match.teamName === homeTeam.name &&
+              match.opponentName === awayTeam.name) ||
+            (match.teamName === awayTeam.name &&
+              match.opponentName === homeTeam.name)
+        )
+        .filter((match) => new Date(match.date) <= now)
+        .sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        )[0];
+
+      if (relevantMatch) {
+        setMatchDate(relevantMatch.date);
+        setStadium(relevantMatch.field);
+        setLeagueName(relevantMatch.leagueName);
+      }
+    }
+  };
+
   const handleHomeTeamSelect = (team: Team) => {
     setHomeTeam(team);
-    updateWhereSportingPlays(team, awayTeam);
+    handleTeamSelect(team, awayTeam);
   };
 
   const handleAwayTeamSelect = (team: Team) => {
     setAwayTeam(team);
-    updateWhereSportingPlays(homeTeam, team);
+    handleTeamSelect(homeTeam, team);
   };
 
   const updateWhereSportingPlays = (home: Team | null, away: Team | null) => {
@@ -92,22 +138,23 @@ const MatchTestPage: React.FC = () => {
   return (
     <div>
       <div className="backgroundImg">
-        <div className="background-special" />
+        {/* <div className="background-special" /> */}
         <div className="background-tint-black" />
         <div className="background-tint">
           <div className="league-logo">
             {}
-            {/* switch (leagueInputValue) {
-              case leagueInputValue.includes("Taça"):
-                <div className="taca-liga" />;
-                break;
-              case leagueInputValue.includes("Campeoes"):
-                <div className="liga-campeoes">
-                  <div className="liga-campeoes-logo" />
-                  <div className="blue" />
-                </div>;
-                break;
-            } */}
+            {leagueInputValue.includes("Taça de Portugal".toUpperCase()) && (
+              <div className="taca-portugal" />
+            )}
+            {leagueInputValue.includes("Taça da Liga".toUpperCase()) && (
+              <div className="taca-liga" />
+            )}
+            {leagueInputValue.includes("Campeões".toUpperCase()) && (
+              <div className="liga-campeoes">
+                <div className="liga-campeoes-logo" />
+                <div className="blue" />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -118,8 +165,8 @@ const MatchTestPage: React.FC = () => {
               spellCheck={false}
               type="text"
               className="league-input"
-              defaultValue={"ALLIANZ CUP 24/25 | QUARTOS-DE-FINAL"}
-              value={leagueInputValue}
+              value={leagueName.toUpperCase()}
+              placeholder="League Name"
               onChange={handleLeagueInputChange}
             />
           </div>
@@ -204,26 +251,17 @@ const MatchTestPage: React.FC = () => {
             <input
               spellCheck={false}
               className="date-text"
-              defaultValue={currentDate}
-              placeholder={currentDate}
+              value={matchDate}
+              placeholder="Date"
             />
           </div>
-
-          {/* <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            showTimeSelect
-            dateFormat={"dd MMMM '|' HH'H'mm"}
-            locale="pt-PT"
-            className="date-picker date-text"
-          /> */}
           <div className={`centered-text stadium-text`} contentEditable="true">
-            Estádio José de Alvalade
+            {stadium}
           </div>
           <div className="sandwiched-text" contentEditable="true">
             VEM ASSISTIR NO NÚCLEO
           </div>
-          <div className="special-text" contentEditable="true">
+          {/* <div className="special-text" contentEditable="true">
             <p
               style={{
                 fontFamily: "DIN Web W07 Cond Bold",
@@ -246,7 +284,7 @@ const MatchTestPage: React.FC = () => {
             >
               RÚBEN AMORIM, RÚBEN AMORIM, RÚBEN AMORIM
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />

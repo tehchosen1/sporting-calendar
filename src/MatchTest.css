@@ -70,7 +70,7 @@ html {
 }
 
 .backgroundImg {
-  background: url("../public/img_1280x720$2019_05_27_16_04_46_1553326.jpg")
+  background: url("../public/2560px-Estádio_do_Moreirense.jpg")
     rgba(76, 175, 80, 0.3) no-repeat center center;
   background-size: 220vh;
   height: 100vh;
@@ -208,6 +208,19 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1; /* Ensure it stays above the background but below main content */
+}
+.taca-portugal {
+  background: url("../public/188527_imgbank_.png") no-repeat center center;
+  background-size: cover;
+  mix-blend-mode: color-dodge;
+  opacity: 0.75;
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -83%);
   z-index: 1; /* Ensure it stays above the background but below main content */
 }
 
