@@ -90,9 +90,36 @@ const MatchTestPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="main-container">
       <div className="backgroundImg">
         {/* <div className="background-special" /> */}
+        {((homeTeam?.name === "Sporting CP" &&
+          (awayTeam?.name === "Benfica" || awayTeam?.name === "FC Porto")) ||
+          (awayTeam?.name === "Sporting CP" &&
+            (homeTeam?.name === "Benfica" ||
+              homeTeam?.name === "FC Porto"))) && (
+          <>
+            {homeTeam?.name === "Sporting CP" ? (
+              <>
+                <div className="gyokeres gyokeres-left" />
+                {awayTeam?.name === "Benfica" ? (
+                  <div className="foe-1 foe-right" />
+                ) : (
+                  <div className="foe-2 foe-right" />
+                )}
+              </>
+            ) : (
+              <>
+                {homeTeam?.name === "Benfica" ? (
+                  <div className="foe-1 foe-left" />
+                ) : (
+                  <div className="foe-2 foe-left" />
+                )}
+                <div className="gyokeres gyokeres-right" />
+              </>
+            )}
+          </>
+        )}
         <div className="background-tint-black" />
         <div className="background-tint">
           <div className="league-logo">
