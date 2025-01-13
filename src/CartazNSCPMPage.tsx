@@ -4,14 +4,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import pt from "date-fns/locale/pt";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import "./MatchTest.css";
+import "./CartazNSCPMPage.css";
 
 interface Team {
   name: string;
   logo: string;
 }
 
-const MatchTestPage: React.FC = () => {
+const CartazNSCPMPage: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isHomeDropdownVisible, setHomeDropdownVisible] = useState(false);
   const [isAwayDropdownVisible, setAwayDropdownVisible] = useState(false);
@@ -282,4 +282,4 @@ const MatchTestPage: React.FC = () => {
   );
 };
 
-export default MatchTestPage;
+export default CartazNSCPMPage;
