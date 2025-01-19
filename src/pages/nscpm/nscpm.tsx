@@ -90,7 +90,7 @@ const CartazNSCPMPage: React.FC = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className={styles.mainContainer}>
       <div className="backgroundImg">
         {/* <div className="background-special" /> */}
         {((homeTeam?.name === "Sporting CP" &&
@@ -101,76 +101,76 @@ const CartazNSCPMPage: React.FC = () => {
           <>
             {homeTeam?.name === "Sporting CP" ? (
               <>
-                <div className="gyokeres gyokeres-left" />
+                <div className="gyokeres gyokeresLeft" />
                 {awayTeam?.name === "Benfica" ? (
-                  <div className="foe-1 foe-right" />
+                  <div className="foe1 foeRight" />
                 ) : (
-                  <div className="foe-2 foe-right" />
+                  <div className="foe2 foeRight" />
                 )}
               </>
             ) : (
               <>
                 {homeTeam?.name === "Benfica" ? (
-                  <div className="foe-1 foe-left" />
+                  <div className="foe1 foeLeft" />
                 ) : (
-                  <div className="foe-2 foe-left" />
+                  <div className="foe2 foeLeft" />
                 )}
-                <div className="gyokeres gyokeres-right" />
+                <div className="gyokeres gyokeresRight" />
               </>
             )}
           </>
         )}
-        <div className="background-tint-black" />
-        <div className="background-tint">
-          <div className="league-logo">
+        <div className="backgroundTintBlack" />
+        <div className="backgroundTint">
+          <div className="leagueLogo">
             {}
             {leagueInputValue.includes("Taça de Portugal".toUpperCase()) && (
-              <div className="taca-portugal" />
+              <div className="tacaPortugal" />
             )}
             {leagueInputValue.includes("Taça da Liga".toUpperCase()) && (
-              <div className="taca-liga" />
+              <div className="tacaLiga" />
             )}
             {leagueInputValue.includes("Campeões".toUpperCase()) && (
-              <div className="liga-campeoes">
-                <div className="liga-campeoes-logo" />
+              <div className="ligaCampeoes">
+                <div className="ligaCampeoesLogo" />
                 <div className="blue" />
               </div>
             )}
           </div>
         </div>
       </div>
-      <div className="main-content">
-        <div className="content-container">
-          <div className="league-name">
+      <div className="mainContent">
+        <div className="contentContainer">
+          <div className="leagueName">
             <input
               spellCheck={false}
               type="text"
-              className="league-input"
+              className="leagueInput"
               defaultValue={"Taça de Portugal 24/25 | 4ª Eliminatória"}
               value={leagueInputValue.toUpperCase()}
               onChange={handleLeagueInputChange}
             />
           </div>
-          <div className="team-names-container">
+          <div className="teamNamesContainer">
             {whereSportingPlays == 1 ? (
-              <div className="team-top-container">
-                <div className="team-text sporting-label"></div>
-                <div className="team-text">
+              <div className="teamTopContainer">
+                <div className="teamText sportingLabel"></div>
+                <div className="teamText">
                   <div className="vs">vs</div>
-                  <div className="generic-label">
+                  <div className="genericLabel">
                     {awayTeam?.name.toUpperCase()}
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="team-top-container">
-                <div className="team-text">
-                  <div className="generic-label">
+              <div className="teamTopContainer">
+                <div className="teamText">
+                  <div className="genericLabel">
                     {homeTeam?.name.toUpperCase()}
                   </div>
                   <div className="vs">vs</div>
                 </div>
-                <div className="team-text sporting-label"></div>
+                <div className="team-text sportingLabel"></div>
               </div>
             )}
           </div>
@@ -231,7 +231,7 @@ const CartazNSCPMPage: React.FC = () => {
           <div className="match-date">
             <input
               spellCheck={false}
-              className="date-text"
+              className={styles.dateText}
               defaultValue={currentDate}
               placeholder={currentDate}
             />
@@ -245,7 +245,10 @@ const CartazNSCPMPage: React.FC = () => {
             locale="pt-PT"
             className="date-picker date-text"
           /> */}
-          <div className={`centered-text stadium-text`} contentEditable="true">
+          <div
+            className={`${styles.centeredText} ${styles.stadiumText}`}
+            contentEditable="true"
+          >
             Estádio José de Alvalade
           </div>
           <div className="sandwiched-text" contentEditable="true">
