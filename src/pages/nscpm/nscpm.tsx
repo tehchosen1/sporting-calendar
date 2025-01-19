@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pt from "date-fns/locale/pt";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import "./CartazNSCPMPage.css";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import styles from "./nscpm.module.css";
 
 interface Team {
   name: string;

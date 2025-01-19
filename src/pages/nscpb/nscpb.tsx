@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pt from "date-fns/locale/pt";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import "./CartazNSCPBPage.css";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import styles from "./nscpb.module.css";
 
 interface Team {
   name: string;
@@ -90,8 +90,8 @@ const CartazNSCPBPage: React.FC = () => {
   };
 
   return (
-    <div className="main-container">
-      <div className="backgroundImg">
+    <div className={`${styles.mainContainer}`}>
+      <div className={`${styles.backgroundImg}`}>
         {/* <div className="background-special" /> */}
         {((homeTeam?.name === "Sporting CP" &&
           (awayTeam?.name === "Benfica" || awayTeam?.name === "FC Porto")) ||

@@ -1,38 +1,44 @@
 /* Global styles */
 
+@media print {
+  .screenshot-button {
+    display: none !important;
+  }
+}
+
 @font-face {
   font-family: "DIN Web W07 Cond Black";
   src: local("DIN Web W07 Cond Black"),
-    url(../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
 }
 @font-face {
   font-family: "DIN Web W07 Cond Bold";
   src: local("DIN Web W07 Cond Bold"),
-    url(../public/DIN\ Web\ W07\ Cond\ Bold.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Cond\ Bold.ttf) format("woff");
 }
 
 @font-face {
   font-family: "DIN Web W07 Cond";
   src: local("DIN Web W07 Cond"),
-    url(../public/DIN\ Web\ W07\ Cond.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Cond.ttf) format("woff");
 }
 
 @font-face {
   font-family: "DIN Web W07 Black";
   src: local("DIN Web W07 Black"),
-    url(../public/DIN\ Web\ W07\ Black.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Black.ttf) format("woff");
 }
 
 @font-face {
   font-family: "DIN Web W07 Italic";
   src: local("DIN Web W07 Italic"),
-    url(../public/DIN\ Web\ W07\ Italic.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Italic.ttf) format("woff");
 }
 
 @font-face {
   font-family: "kenyan coffee rg";
   src: local("kenyan coffee rg"),
-    url(../public/kenyan\ coffee\ rg.otf) format("woff");
+    url(/public/kenyan\ coffee\ rg.otf) format("woff");
 }
 * {
   margin: 0;
@@ -45,6 +51,7 @@ body,
 html {
   overflow: hidden;
   height: 100%;
+  width: 100px;
   margin: 0;
   padding: 0;
 }
@@ -60,12 +67,12 @@ html {
   background-blend-mode: multiply;
   margin: 0 auto;
   z-index: 0;
-  width: 100%;
+  width: 1080px;
   overflow: hidden;
   background-color: black;
 }
 
-.main-container {
+.mainContainer {
   margin: 0 auto;
   z-index: 0;
   width: 100%;
@@ -77,7 +84,7 @@ html {
 }
 
 .backgroundImg {
-  background: url("../public/uniao_leiria_futebol_estadio_Fotos-Joaquim-DamasoDSCF7834_.jpg")
+  background: url("/public/uniao_leiria_futebol_estadio_Fotos-Joaquim-DamasoDSCF7834_.jpg")
     rgba(76, 175, 80, 0.3) no-repeat center center;
   background-size: 220vh;
   height: 100vh;
@@ -91,24 +98,28 @@ html {
 }
 
 .gyokeres {
-  background: url("../public/gyokeres.png") rgba(76, 175, 80, 0) no-repeat
-    center center;
+.GYOKERES {
+  background: url("/public/gyokeres.png") rgba(76, 175, 80, 0) no-repeat center
+    center;
   z-index: 4;
 }
 
 .foe-1 {
-  background: url("../public/di_maria.png") rgba(76, 175, 80, 0) no-repeat
-    center center;
+.FOE1 {
+  background: url("/public/di_maria.png") rgba(76, 175, 80, 0) no-repeat center
+    center;
   z-index: 3;
 }
 
 .foe-2 {
-  background: url("../public/samu.png") rgba(76, 175, 80, 0) no-repeat center
+.FOE2 {
+  background: url("/public/samu.png") rgba(76, 175, 80, 0) no-repeat center
     center;
   z-index: 3;
 }
 
 .gyokeres-left {
+.GYOKERESLEFT {
   background-size: 70vh;
   position: absolute;
   top: 0;
@@ -118,6 +129,7 @@ html {
 }
 
 .gyokeres-right {
+.GYOKERESRIGHT {
   background-size: 70vh;
   position: absolute;
   top: 0;
@@ -127,6 +139,7 @@ html {
 }
 
 .foe-left {
+.FOELEFT {
   background-size: 70vh;
   position: absolute;
   top: 0;
@@ -136,6 +149,7 @@ html {
 }
 
 .foe-right {
+.FOERIGHT {
   background-size: 70vh;
   position: absolute;
   top: 0;
@@ -145,6 +159,7 @@ html {
 }
 
 .background-tint {
+.BACKGROUNDTINT {
   position: absolute;
   top: 0;
   left: 0;
@@ -154,6 +169,7 @@ html {
   z-index: 1; /* Ensure it's above the background */
 }
 .background-tint-black {
+.BACKGROUNDTINTBLACK {
   position: absolute;
   top: 0;
   left: 0;
@@ -163,18 +179,20 @@ html {
   z-index: 2;
 }
 .background-special {
+.BACKGROUNDSPECIAL {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("../public/amorim.png") no-repeat bottom center;
+  background: url("/public/amorim.png") no-repeat bottom center;
   opacity: 0.7;
   background-size: 110%;
   z-index: 2;
 }
 
 .special-text {
+.SPECIALTEXT {
   text-shadow: rgba(0, 0, 0, 1) 2px 2px 10px, rgba(0, 0, 0, 1) 2px 2px 10px,
     rgba(0, 0, 0, 1) 2px 2px 10px;
   margin-top: -5%;
@@ -185,7 +203,8 @@ html {
 }
 
 .content {
-  word-break: break-all;
+.content {
+.CONTENT {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -198,20 +217,23 @@ html {
 }
 
 .container {
-  margin: auto;
+.container {
+.CONTAINER {
   min-height: 100dvh; /* Updated for full viewport height */
   width: 560px;
   background-color: black;
 }
 
 @keyframes react-loading-skeleton {
-  100% {
+@keyframes react-loading-skeleton {
+@keyframes REACTLOADINGSKELETON {
     transform: translateX(100%);
   }
 }
 
 .skeleton_match {
-  background-color: rgba(11, 112, 74, 0.5);
+.skeleton_match {
+.SKELETONMATCH {
   display: grid;
   grid-template-columns: 1fr 7fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -221,8 +243,10 @@ html {
 
 .skeleton_match::after {
   content: " ";
-  display: grid;
-  width: 100dvw;
+.skeleton_match::after {
+  content: " ";
+.SKELETONMATCHAFTER {
+  content: "";
   height: 100dvh;
   grid-template-columns: 1fr 7fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -237,7 +261,8 @@ html {
 
   animation-name: react-loading-skeleton;
   animation-direction: normal;
-  animation-duration: 1.5s;
+  animation-name: react-loading-skeleton;
+  animation-name: REACTLOADINGSKELETON;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
@@ -245,23 +270,28 @@ html {
 @media (prefers-reduced-motion) {
   .react-loading-skeleton {
     --pseudo-element-display: none; /* Disable animation */
-  }
+  .react-loading-skeleton {
+  .REACTLOADINGSKELETON {
 }
 
 body,
 html {
-  margin: 0;
-  padding: 0;
+body,
+html {
+BODY,
+HTML {
   height: 100%;
   width: 100%;
 }
 
 .league-logo {
 }
-
+.league-logo {
+.LEAGUETABLOGO {
 .taca-liga {
-  background: url("../public/taca-da-liga.png") no-repeat center center;
-  background-size: cover;
+  background: url("/public/taca-da-liga.png") no-repeat center center;
+.taca-liga {
+.TACALIGA {
   mix-blend-mode: color-dodge;
   opacity: 0.75;
   position: absolute;
@@ -273,7 +303,7 @@ html {
   z-index: 1; /* Ensure it stays above the background but below main content */
 }
 .taca-portugal {
-  background: url("../public/188527_imgbank_.png") no-repeat center center;
+  background: url("/public/188527_imgbank_.png") no-repeat center center;
   background-size: cover;
   mix-blend-mode: color-dodge;
   opacity: 0.75;
@@ -311,7 +341,7 @@ html {
 
 .liga-campeoes-logo {
   position: absolute;
-  background: url("../public/liga-campeoes_blue.png") no-repeat center center;
+  background: url("/public/liga-campeoes_blue.png") no-repeat center center;
   background-size: cover;
   z-index: 2;
   border-radius: 500px;
@@ -327,7 +357,7 @@ html {
 }
 
 .home-logo {
-  background: url("../public/sporting.png") no-repeat center center;
+  background: url("/public/sporting.png") no-repeat center center;
   background-size: cover;
   width: 140px;
   height: 140px;
@@ -335,7 +365,7 @@ html {
 }
 
 .away-logo {
-  background: url("../public/nacional.png") no-repeat center center;
+  background: url("/public/nacional.png") no-repeat center center;
   background-size: cover;
   width: 140px;
   height: 140px;
@@ -369,7 +399,7 @@ html {
 }
 
 .sporting-label {
-  background: url("../public/sporting_label-01.png") no-repeat center center;
+  background: url("/public/sporting_label-01.png") no-repeat center center;
   background-size: contain;
   filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
   width: 100%;

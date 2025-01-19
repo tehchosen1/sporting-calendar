@@ -9,36 +9,36 @@
 @font-face {
   font-family: "DIN Web W07 Cond Black";
   src: local("DIN Web W07 Cond Black"),
-    url(../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
 }
 @font-face {
   font-family: "DIN Web W07 Cond Bold";
   src: local("DIN Web W07 Cond Bold"),
-    url(../public/DIN\ Web\ W07\ Cond\ Bold.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Cond\ Bold.ttf) format("woff");
 }
 
 @font-face {
   font-family: "DIN Web W07 Cond";
   src: local("DIN Web W07 Cond"),
-    url(../public/DIN\ Web\ W07\ Cond.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Cond.ttf) format("woff");
 }
 
 @font-face {
   font-family: "DIN Web W07 Black";
   src: local("DIN Web W07 Black"),
-    url(../public/DIN\ Web\ W07\ Black.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Black.ttf) format("woff");
 }
 
 @font-face {
   font-family: "DIN Web W07 Italic";
   src: local("DIN Web W07 Italic"),
-    url(../public/DIN\ Web\ W07\ Italic.ttf) format("woff");
+    url(/public/DIN\ Web\ W07\ Italic.ttf) format("woff");
 }
 
 @font-face {
   font-family: "kenyan coffee rg";
   src: local("kenyan coffee rg"),
-    url(../public/kenyan\ coffee\ rg.otf) format("woff");
+    url(/public/kenyan\ coffee\ rg.otf) format("woff");
 }
 * {
   margin: 0;
@@ -84,8 +84,8 @@ html {
 }
 
 .backgroundImg {
-  background: url("../public/uniao_leiria_futebol_estadio_Fotos-Joaquim-DamasoDSCF7834_.jpg")
-    rgba(76, 175, 80, 0.3) no-repeat center center;
+  background: url("/public/estadio-rio-ave.png") rgba(76, 175, 80, 0.3)
+    no-repeat center center;
   background-size: 220vh;
   height: 100vh;
   width: 100vw;
@@ -98,19 +98,19 @@ html {
 }
 
 .gyokeres {
-  background: url("../public/gyokeres.png") rgba(76, 175, 80, 0) no-repeat
-    center center;
+  background: url("/public/gyokeres.png") rgba(76, 175, 80, 0) no-repeat center
+    center;
   z-index: 4;
 }
 
 .foe-1 {
-  background: url("../public/di_maria.png") rgba(76, 175, 80, 0) no-repeat
-    center center;
+  background: url("/public/di_maria.png") rgba(76, 175, 80, 0) no-repeat center
+    center;
   z-index: 3;
 }
 
 .foe-2 {
-  background: url("../public/samu.png") rgba(76, 175, 80, 0) no-repeat center
+  background: url("/public/samu.png") rgba(76, 175, 80, 0) no-repeat center
     center;
   z-index: 3;
 }
@@ -175,7 +175,7 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("../public/amorim.png") no-repeat bottom center;
+  background: url("/public/amorim.png") no-repeat bottom center;
   opacity: 0.7;
   background-size: 110%;
   z-index: 2;
@@ -267,7 +267,7 @@ html {
 }
 
 .taca-liga {
-  background: url("../public/taca-da-liga.png") no-repeat center center;
+  background: url("/public/taca-da-liga.png") no-repeat center center;
   background-size: cover;
   mix-blend-mode: color-dodge;
   opacity: 0.75;
@@ -280,7 +280,7 @@ html {
   z-index: 1; /* Ensure it stays above the background but below main content */
 }
 .taca-portugal {
-  background: url("../public/188527_imgbank_.png") no-repeat center center;
+  background: url("/public/188527_imgbank_.png") no-repeat center center;
   background-size: cover;
   mix-blend-mode: color-dodge;
   opacity: 0.75;
@@ -318,7 +318,7 @@ html {
 
 .liga-campeoes-logo {
   position: absolute;
-  background: url("../public/liga-campeoes_blue.png") no-repeat center center;
+  background: url("/public/liga-campeoes_blue.png") no-repeat center center;
   background-size: cover;
   z-index: 2;
   border-radius: 500px;
@@ -334,7 +334,7 @@ html {
 }
 
 .home-logo {
-  background: url("../public/sporting.png") no-repeat center center;
+  background: url("/public/sporting.png") no-repeat center center;
   background-size: cover;
   width: 140px;
   height: 140px;
@@ -342,7 +342,7 @@ html {
 }
 
 .away-logo {
-  background: url("../public/nacional.png") no-repeat center center;
+  background: url("/public/nacional.png") no-repeat center center;
   background-size: cover;
   width: 140px;
   height: 140px;
@@ -376,7 +376,7 @@ html {
 }
 
 .sporting-label {
-  background: url("../public/sporting_label-01.png") no-repeat center center;
+  background: url("/public/sporting_label-01.png") no-repeat center center;
   background-size: contain;
   filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
   width: 100%;
