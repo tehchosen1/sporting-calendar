@@ -11,82 +11,177 @@ interface Team {
   logo: string;
 }
 
+interface Match {
+  date: string;
+  time: string;
+  homeTeam: string;
+  awayTeam: string;
+  result: string;
+  leagueName: string;
+  leagueIcon: string;
+  stadium: string;
+  jornada: string;
+}
+
 const CartazNSCPMPage: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [isHomeDropdownVisible, setHomeDropdownVisible] = useState(false);
-  const [isAwayDropdownVisible, setAwayDropdownVisible] = useState(false);
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [teams, setTeams] = useState<Team[]>([]);
+  const [matches, setMatches] = useState<Match[]>([]);
+  const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
   const [homeTeam, setHomeTeam] = useState<Team | null>(null);
   const [awayTeam, setAwayTeam] = useState<Team | null>(null);
   const [whereSportingPlays, setWhereSportingPlays] = useState<number>(1);
   const [leagueInputValue, setLeagueInputValue] = useState("");
+  const [stadiumValue, setStadiumValue] = useState("Estádio José de Alvalade");
 
   useEffect(() => {
-    const fetchTeams = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("/teams.json");
-        if (!response.ok) {
-          throw new Error("teams.json not found");
+        const [teamsResponse, matchesResponse] = await Promise.all([
+          fetch("/teams.json"),
+          fetch("/matches.json"),
+        ]);
+
+        if (!teamsResponse.ok) throw new Error("teams.json not found");
+        if (!matchesResponse.ok) throw new Error("matches.json not found");
+
+        const teamsData = await teamsResponse.json();
+        const matchesData = await matchesResponse.json();
+
+        setTeams(teamsData);
+        setMatches(matchesData);
+
+        // Set initial teams
+        if (teamsData.length > 0) {
+          setHomeTeam(teamsData[0]);
+          setAwayTeam(teamsData[0]);
         }
-        const data = await response.json();
-        setTeams(data);
-        setHomeTeam(data[0]);
-        setAwayTeam(data[0]);
+
+        // Set initial match if available
+        if (matchesData.length > 0) {
+          selectMatch(matchesData[0], teamsData);
+        }
       } catch (error) {
-        console.error("Error loading teams:", error);
+        console.error("Error loading data:", error);
       }
     };
 
-    fetchTeams();
+    fetchData();
   }, []);
 
-  const formatDateString = (date: Date | null): string => {
+  const selectMatch = (match: Match, teamsData: Team[] = teams) => {
+    setSelectedMatch(match);
+
+    // Find team logos
+    const home = teamsData.find((t) => t.name === match.homeTeam);
+    const away = teamsData.find((t) => t.name === match.awayTeam);
+
+    if (home) setHomeTeam(home);
+    if (away) setAwayTeam(away);
+
+    // Update sporting position
+    if (match.homeTeam === "Sporting") {
+      setWhereSportingPlays(1);
+    } else if (match.awayTeam === "Sporting") {
+      setWhereSportingPlays(2);
+    }
+
+    // Update league name with jornada if available
+    const leagueText = match.jornada
+      ? `${match.leagueName} | ${match.jornada}`
+      : match.leagueName;
+    setLeagueInputValue(leagueText);
+
+    // Update stadium
+    setStadiumValue(match.stadium);
+
+    // Update date with time
+    const dateTime = new Date(match.date);
+    if (match.time && match.time !== "TBD") {
+      const [hours, minutes] = match.time.split(":");
+      dateTime.setHours(parseInt(hours), parseInt(minutes));
+    }
+    setSelectedDate(dateTime);
+  };
+
+  const formatDateString = (date: Date | null, time?: string): string => {
     if (!date) return "";
-    return date
-      .toLocaleDateString("pt-PT", {
-        day: "2-digit",
-        month: "long",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-      .replace("de ", " ")
-      .toUpperCase()
-      .replace("ÀS", " | ")
-      .replace(":", "H");
+
+    // Check if time is available (not TBD and not empty)
+    const hasValidTime =
+      selectedMatch?.time &&
+      selectedMatch.time !== "TBD" &&
+      selectedMatch.time !== "";
+
+    if (hasValidTime) {
+      return date
+        .toLocaleDateString("pt-PT", {
+          day: "2-digit",
+          month: "long",
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+        .replace("de ", " ")
+        .toUpperCase()
+        .replace("ÀS", " | ")
+        .replace(":", "H");
+    } else {
+      return (
+        date
+          .toLocaleDateString("pt-PT", {
+            day: "2-digit",
+            month: "long",
+          })
+          .replace("de ", " ")
+          .toUpperCase() + " | A DEFINIR"
+      );
+    }
   };
 
   const currentDate = formatDateString(selectedDate);
 
-  const toggleHomeDropdown = () => {
-    setHomeDropdownVisible(!isHomeDropdownVisible);
-    setAwayDropdownVisible(!isAwayDropdownVisible);
+  const toggleDropdown = () => {
+    setDropdownVisible(!isDropdownVisible);
   };
 
-  const toggleAwayDropdown = () => {
-    setHomeDropdownVisible(!isHomeDropdownVisible);
-    setAwayDropdownVisible(!isAwayDropdownVisible);
+  const handleMatchSelect = (match: Match) => {
+    selectMatch(match);
+    setDropdownVisible(false);
   };
 
-  const handleHomeTeamSelect = (team: Team) => {
-    setHomeTeam(team);
-    updateWhereSportingPlays(team, awayTeam);
+  // Group matches by month and sort by date
+  const groupMatchesByMonth = () => {
+    const sorted = [...matches].sort((a, b) =>
+      new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
+    const grouped: { [key: string]: Match[] } = {};
+
+    sorted.forEach((match) => {
+      const date = new Date(match.date);
+      const monthYear = date.toLocaleDateString('pt-PT', {
+        month: 'long',
+        year: 'numeric'
+      });
+
+      if (!grouped[monthYear]) {
+        grouped[monthYear] = [];
+      }
+      grouped[monthYear].push(match);
+    });
+
+    return grouped;
   };
 
-  const handleAwayTeamSelect = (team: Team) => {
-    setAwayTeam(team);
-    updateWhereSportingPlays(homeTeam, team);
-  };
-
-  const updateWhereSportingPlays = (home: Team | null, away: Team | null) => {
-    if (home && home.name === "Sporting CP") {
-      setWhereSportingPlays(1);
-    } else if (away && away.name === "Sporting CP") {
-      setWhereSportingPlays(2);
-    }
-  };
+  const groupedMatches = groupMatchesByMonth();
 
   const handleLeagueInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLeagueInputValue(e.target.value);
+  };
+
+  const handleStadiumChange = (e: React.ChangeEvent<HTMLDivElement>) => {
+    setStadiumValue(e.currentTarget.textContent || "");
   };
 
   return (
@@ -174,65 +269,28 @@ const CartazNSCPMPage: React.FC = () => {
               </div>
             )}
           </div>
-          <div className="logo-container">
+          <div className="logo-container" onClick={toggleDropdown}>
             <div
               className="home-logo"
               style={{ backgroundImage: `url(${homeTeam?.logo})` }}
-              onClick={toggleHomeDropdown}
             />
             <div
               className="away-logo"
               style={{ backgroundImage: `url(${awayTeam?.logo})` }}
-              onClick={toggleAwayDropdown}
             />
-          </div>
-          <div className="dropdown-container">
-            {isHomeDropdownVisible && teams.length > 0 && (
-              <select
-                className="dropdown"
-                defaultValue={homeTeam?.name || "Sporting CP"}
-                onChange={(e) => {
-                  const selectedTeam = teams.find(
-                    (team) => team.name === e.target.value
-                  );
-                  if (selectedTeam) {
-                    handleHomeTeamSelect(selectedTeam);
-                  }
-                }}
-              >
-                {teams.map((team) => (
-                  <option key={team.name} value={team.name}>
-                    {team.name}
-                  </option>
-                ))}
-              </select>
-            )}
-            {isAwayDropdownVisible && teams.length > 0 && (
-              <select
-                className="dropdown"
-                defaultValue={awayTeam?.name || "Sporting CP"}
-                onChange={(e) => {
-                  const selectedTeam = teams.find(
-                    (team) => team.name === e.target.value
-                  );
-                  if (selectedTeam) {
-                    handleAwayTeamSelect(selectedTeam);
-                  }
-                }}
-              >
-                {teams.map((team) => (
-                  <option key={team.name} value={team.name}>
-                    {team.name}
-                  </option>
-                ))}
-              </select>
-            )}
+            <div className="logo-hover-overlay">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8V20M17 20L21 16M17 20L13 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <div className="logo-hover-text">MUDAR JOGO</div>
+            </div>
           </div>
           <div className="match-date">
             <input
               spellCheck={false}
               className="date-text"
-              defaultValue={currentDate}
+              value={currentDate}
+              onChange={(e) => {}}
               placeholder={currentDate}
             />
           </div>
@@ -245,10 +303,17 @@ const CartazNSCPMPage: React.FC = () => {
             locale="pt-PT"
             className="date-picker date-text"
           /> */}
-          <div className={`centered-text stadium-text`} contentEditable="true">
-            Estádio José de Alvalade
-          </div>
-          <div className="sandwiched-text" contentEditable="true">
+          <div
+            className={`centered-text stadium-text`}
+            contentEditable="true"
+            suppressContentEditableWarning={true}
+            dangerouslySetInnerHTML={{ __html: stadiumValue }}
+          />
+          <div
+            className="sandwiched-text"
+            contentEditable="true"
+            suppressContentEditableWarning={true}
+          >
             VEM ASSISTIR NO NÚCLEO
           </div>
           {/* <div className="special-text" contentEditable="true">
@@ -277,6 +342,52 @@ const CartazNSCPMPage: React.FC = () => {
           </div> */}
         </div>
       </div>
+      {isDropdownVisible && matches.length > 0 && (
+        <>
+          <div className="modal-overlay" onClick={toggleDropdown} />
+          <div className="match-modal">
+            <div className="modal-header">
+              <h2>Selecionar Jogo</h2>
+              <button className="modal-close" onClick={toggleDropdown}>
+                ✕
+              </button>
+            </div>
+            <div className="modal-content">
+              {Object.entries(groupedMatches).map(([monthYear, monthMatches]) => (
+                <div key={monthYear} className="month-group">
+                  <div className="month-divider">{monthYear.toUpperCase()}</div>
+                  <div className="match-grid">
+                    {monthMatches.map((match, index) => (
+                      <div
+                        key={index}
+                        className={`match-item ${
+                          selectedMatch === match ? "selected" : ""
+                        }`}
+                        onClick={() => handleMatchSelect(match)}
+                      >
+                        <div className="match-item-header">
+                          <div className="match-day">
+                            {new Date(match.date).getDate()}
+                          </div>
+                          <div className="match-time">
+                            {match.time && match.time !== "TBD" ? match.time : "TBD"}
+                          </div>
+                        </div>
+                        <div className="match-versus">
+                          <div className="match-home">{match.homeTeam}</div>
+                          <div className="vs-divider">vs</div>
+                          <div className="match-away">{match.awayTeam}</div>
+                        </div>
+                        <div className="match-league-name">{match.leagueName}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
       <Footer />
     </div>
   );

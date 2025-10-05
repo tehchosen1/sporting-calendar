@@ -7,6 +7,8 @@ export interface MatchInfo {
   leagueIcon: string;
   leagueName: string;
   result: string;
+  homeTeam?: string;
+  awayTeam?: string;
 }
 
 // const API_BASE_URL = "https://sporting-calendar-api.onrender.com/api"; // PROD

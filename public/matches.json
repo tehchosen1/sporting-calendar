@@ -1,1 +1,156 @@
-[]
+[
+  {
+    "date": "2026-02-22",
+    "time": "00:00",
+    "homeTeam": "Moreirense",
+    "awayTeam": "Sporting",
+    "result": "",
+    "leagueName": "Liga Portugal Betclic 25/26",
+    "leagueIcon": "",
+    "stadium": "Estádio Comendador Joaquim de Almeida Freitas (POR)",
+    "jornada": "J23"
+  },
+  {
+    "date": "2026-01-28",
+    "time": "20:00",
+    "homeTeam": "Athletic Bilbao",
+    "awayTeam": "Sporting",
+    "result": "",
+    "leagueName": "UEFA Champions League 25/26",
+    "leagueIcon": "https://cdn-img.zerozero.pt/img/bandeiras/27_comp_lc_20250212170930.png",
+    "stadium": "San Mamés (La Catedral) (ESP)",
+    "jornada": "League"
+  },
+  {
+    "date": "2026-01-20",
+    "time": "20:00",
+    "homeTeam": "Sporting",
+    "awayTeam": "PSG",
+    "result": "",
+    "leagueName": "UEFA Champions League 25/26",
+    "leagueIcon": "https://cdn-img.zerozero.pt/img/bandeiras/27_comp_lc_20250212170930.png",
+    "stadium": "Estádio José Alvalade (POR)",
+    "jornada": "League"
+  },
+  {
+    "date": "2025-12-09",
+    "time": "17:45",
+    "homeTeam": "Bayern München",
+    "awayTeam": "Sporting",
+    "result": "",
+    "leagueName": "UEFA Champions League 25/26",
+    "leagueIcon": "https://cdn-img.zerozero.pt/img/bandeiras/27_comp_lc_20250212170930.png",
+    "stadium": "Allianz Arena (GER)",
+    "jornada": "League"
+  },
+  {
+    "date": "2025-12-05",
+    "time": "20:15",
+    "homeTeam": "Benfica",
+    "awayTeam": "Sporting",
+    "result": "",
+    "leagueName": "Liga Portugal Betclic 25/26",
+    "leagueIcon": "",
+    "stadium": "Estádio do Sport Lisboa e Benfica (POR)",
+    "jornada": "J13"
+  },
+  {
+    "date": "2025-11-30",
+    "time": "18:00",
+    "homeTeam": "Sporting",
+    "awayTeam": "Est. Amadora",
+    "result": "",
+    "leagueName": "Liga Portugal Betclic 25/26",
+    "leagueIcon": "",
+    "stadium": "Estádio José Alvalade (POR)",
+    "jornada": "J12"
+  },
+  {
+    "date": "2025-11-26",
+    "time": "20:00",
+    "homeTeam": "Sporting",
+    "awayTeam": "Club Brugge",
+    "result": "",
+    "leagueName": "UEFA Champions League 25/26",
+    "leagueIcon": "https://cdn-img.zerozero.pt/img/bandeiras/27_comp_lc_20250212170930.png",
+    "stadium": "Estádio José Alvalade (POR)",
+    "jornada": "League"
+  },
+  {
+    "date": "2025-11-08",
+    "time": "20:30",
+    "homeTeam": "Santa Clara",
+    "awayTeam": "Sporting",
+    "result": "",
+    "leagueName": "Liga Portugal Betclic 25/26",
+    "leagueIcon": "",
+    "stadium": "Estádio de São Miguel (POR)",
+    "jornada": "J11"
+  },
+  {
+    "date": "2025-11-04",
+    "time": "20:00",
+    "homeTeam": "Juventus",
+    "awayTeam": "Sporting",
+    "result": "",
+    "leagueName": "UEFA Champions League 25/26",
+    "leagueIcon": "https://cdn-img.zerozero.pt/img/bandeiras/27_comp_lc_20250212170930.png",
+    "stadium": "Juventus Stadium (ITA)",
+    "jornada": "League"
+  },
+  {
+    "date": "2025-10-31",
+    "time": "20:15",
+    "homeTeam": "Sporting",
+    "awayTeam": "FC Alverca",
+    "result": "",
+    "leagueName": "Liga Portugal Betclic 25/26",
+    "leagueIcon": "",
+    "stadium": "Estádio José Alvalade (POR)",
+    "jornada": "J10"
+  },
+  {
+    "date": "2025-10-28",
+    "time": "20:15",
+    "homeTeam": "Sporting",
+    "awayTeam": "FC Alverca",
+    "result": "",
+    "leagueName": "Allianz Cup 25/26",
+    "leagueIcon": "https://cdn-img.zerozero.pt/img/bandeiras/207_comp_tl.png",
+    "stadium": "Estádio José Alvalade (POR)",
+    "jornada": "QF"
+  },
+  {
+    "date": "2025-10-26",
+    "time": "18:00",
+    "homeTeam": "CD Tondela",
+    "awayTeam": "Sporting",
+    "result": "",
+    "leagueName": "Liga Portugal Betclic 25/26",
+    "leagueIcon": "",
+    "stadium": "Estádio João Cardoso (POR)",
+    "jornada": "J9"
+  },
+  {
+    "date": "2025-10-22",
+    "time": "20:00",
+    "homeTeam": "Sporting",
+    "awayTeam": "Marseille",
+    "result": "",
+    "leagueName": "UEFA Champions League 25/26",
+    "leagueIcon": "https://cdn-img.zerozero.pt/img/bandeiras/27_comp_lc_20250212170930.png",
+    "stadium": "Estádio José Alvalade (POR)",
+    "jornada": "League"
+  },
+  {
+    "date": "2025-10-18",
+    "time": "20:15",
+    "homeTeam": "Paços de Ferreira",
+    "awayTeam": "Sporting",
+    "result": "",
+    "leagueName": "Taça de Portugal 25/26",
+    "leagueIcon": "",
+    "stadium": "Estádio Capital do Móvel (POR)",
+    "jornada": "3E"
+  }
+]

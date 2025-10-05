@@ -7,6 +7,7 @@ interface MatchListProps {
   matches: MatchInfo[];
   onMatchClick: (match: MatchInfo) => void;
   onColumnChange: (column: number) => void;
+  onMatchHover?: (match: MatchInfo | null) => void;
 }
 // src/components/MatchList.tsx
 
@@ -14,6 +15,7 @@ const MatchList: React.FC<MatchListProps> = ({
   matches,
   onMatchClick,
   onColumnChange,
+  onMatchHover,
 }) => {
   // Sort matches by day and time
   const sortedMatches = [...matches].sort((a, b) => {
@@ -55,6 +57,7 @@ const MatchList: React.FC<MatchListProps> = ({
             leagueIcon={match.leagueIcon}
             field={match.field}
             onClick={() => onMatchClick(match)}
+            onHover={(isHovering) => onMatchHover?.(isHovering ? match : null)}
           />
         ))}
       </div>
@@ -71,6 +74,7 @@ const MatchList: React.FC<MatchListProps> = ({
               leagueIcon={match.leagueIcon}
               field={match.field}
               onClick={() => onMatchClick(match)}
+              onHover={(isHovering) => onMatchHover?.(isHovering ? match : null)}
             />
           ))}
         </div>

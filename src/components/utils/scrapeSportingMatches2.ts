@@ -11,6 +11,8 @@ interface MatchInfo {
   leagueIcon: string;
   leagueName: string;
   result: string;
+  homeTeam?: string;
+  awayTeam?: string;
 }
 
 // Base URLs

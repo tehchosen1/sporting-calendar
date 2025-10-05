@@ -11,6 +11,7 @@ interface MatchProps {
   teamLogo: string;
   field: string;
   onClick: () => void;
+  onHover?: (isHovering: boolean) => void;
 }
 
 export const getMatchFieldDisplay = (field: string) => {
@@ -33,16 +34,22 @@ const Match: React.FC<MatchProps> = ({
   teamLogo,
   field,
   onClick,
+  onHover,
 }) => {
   return (
-    <div className={`match`} onClick={undefined}>
+    <div
+      className={`match`}
+      onClick={undefined}
+      onMouseEnter={() => onHover?.(true)}
+      onMouseLeave={() => onHover?.(false)}
+    >
       <div className="match-day">{day}</div>
       <div className="match-description">
         <div className="match-team">{team_name.toUpperCase()}</div>
         <img src={teamLogo} alt="team logo" className="team-logo" />
       </div>
       <div className="match-time">
-        <div className="match-time-text">{time}</div>
+        <div className="match-time-text">{time || "Hora a determinar"}</div>
       </div>
       <div className="match-fill">
         <div className="match-type">
