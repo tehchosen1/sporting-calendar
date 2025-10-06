@@ -16,10 +16,10 @@ const LeagueBadge: React.FC<LeagueBadgeProps> = ({ leagueName }) => {
       {upperLeagueName.includes("TAÇA DA LIGA") && (
         <div className="taca-liga" />
       )}
-      {upperLeagueName.includes("CAMPEÕES") && (
+      {(upperLeagueName.includes("CAMPEÕES") ||
+        upperLeagueName.includes("CHAMPIONS LEAGUE")) && (
         <div className="liga-campeoes">
           <div className="liga-campeoes-logo" />
-          <div className="blue" />
         </div>
       )}
     </div>
