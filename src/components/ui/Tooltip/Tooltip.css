@@ -20,6 +20,11 @@
   width: 140px;
   height: 110px;
   justify-content: center;
+  border: 2px solid rgba(11, 112, 74, 0.4);
+  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
 }
 
 .hover-tooltip.tooltip-top {
@@ -45,20 +50,74 @@
   white-space: nowrap;
 }
 
+.hover-tooltip:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(11, 112, 74, 0.5) 0%,
+    rgba(11, 112, 74, 0.75) 100%
+  );
+  border-color: rgba(11, 112, 74, 0.7);
+  box-shadow: 0 12px 28px rgba(11, 112, 74, 0.4),
+    0 0 35px rgba(11, 112, 74, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+}
+
 .tooltip-clickable {
   cursor: pointer;
   pointer-events: all;
-  border: 2px solid rgba(11, 112, 74, 0.4);
-  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.3s ease;
 }
 
-.tooltip-clickable:hover {
-  background: rgba(11, 112, 74, 0.6);
-  border-color: rgba(11, 112, 74, 0.7);
-  box-shadow: 0 12px 28px rgba(11, 112, 74, 0.4),
-    0 0 35px rgba(11, 112, 74, 0.3),
-    inset 0 1px 2px rgba(255, 255, 255, 0.15);
+/* Mobile Responsive Styles */
+@media (max-width: 767px) {
+  .hover-tooltip {
+    width: 120px;
+    height: 95px;
+    padding: 10px 16px;
+  }
+
+  .hover-tooltip svg {
+    width: 35px;
+    height: 35px;
+  }
+
+  .hover-tooltip-text {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hover-tooltip {
+    width: 100px;
+    height: 85px;
+    padding: 8px 14px;
+    border-radius: 10px;
+  }
+
+  .hover-tooltip svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .hover-tooltip-text {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 375px) {
+  .hover-tooltip {
+    width: 85px;
+    height: 75px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    gap: 3px;
+  }
+
+  .hover-tooltip svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .hover-tooltip-text {
+    font-size: 9px;
+    letter-spacing: 0.3px;
+  }
 }

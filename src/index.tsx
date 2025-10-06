@@ -10,6 +10,7 @@ import TeamVersusDisplay from "./components/match/TeamVersusDisplay";
 import EditableText from "./components/ui/EditableText";
 import { Team, Match } from "./types";
 import randomQuotes from "./random_quotes.json";
+import domtoimage from "dom-to-image";
 import "./index.css";
 
 const App: React.FC = () => {
@@ -28,7 +29,11 @@ const App: React.FC = () => {
     const randomIndex = Math.floor(Math.random() * randomQuotes.length);
     return randomQuotes[randomIndex];
   });
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
+  const [showFlash, setShowFlash] = useState(false);
+  const [hideTooltips, setHideTooltips] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const getRandomQuote = () => {
     const randomIndex = Math.floor(Math.random() * randomQuotes.length);
@@ -54,6 +59,109 @@ const App: React.FC = () => {
     }
   };
 
+  const handleBackgroundUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setBackgroundImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCaptureImage = async () => {
+    const mainContainer = document.querySelector(
+      ".main-container"
+    ) as HTMLElement;
+    if (!mainContainer) return;
+
+    // Hide tooltips
+    setHideTooltips(true);
+
+    // Wait for state update
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // Show flash animation
+    setShowFlash(true);
+
+    // Wait for flash animation to complete (300ms total)
+    await new Promise((resolve) => setTimeout(resolve, 350));
+
+    // Hide flash before capture
+    setShowFlash(false);
+
+    // Wait a bit for flash to be fully hidden
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    try {
+      // Get current container width
+      const currentWidth = mainContainer.offsetWidth;
+
+      // Capture the full page
+      const dataUrl = await domtoimage.toPng(mainContainer, {
+        height: 1024,
+      });
+
+      // If width is greater than 768px, crop it
+      if (currentWidth > 768) {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = 768;
+          canvas.height = 1024;
+          const ctx = canvas.getContext("2d");
+
+          if (ctx) {
+            // Calculate crop offset to center the image
+            const cropX = (currentWidth - 768) / 2;
+
+            // Draw the cropped image (centered)
+            ctx.drawImage(
+              img,
+              cropX, // source x (crop from center)
+              0, // source y
+              768, // source width
+              1024, // source height
+              0, // dest x
+              0, // dest y
+              768, // dest width
+              1024 // dest height
+            );
+
+            // Download the cropped image
+            canvas.toBlob((blob) => {
+              if (blob) {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.download = `sporting-calendar-${new Date().getTime()}.png`;
+                link.href = url;
+                link.click();
+                URL.revokeObjectURL(url);
+              }
+            });
+          }
+        };
+        img.src = dataUrl;
+      } else {
+        // Width is already <= 768px, download as is
+        const link = document.createElement("a");
+        link.download = `sporting-calendar-${new Date().getTime()}.png`;
+        link.href = dataUrl;
+        link.click();
+      }
+    } catch (error) {
+      console.error("Error capturing image:", error);
+    }
+
+    // Show tooltips again
+    setHideTooltips(false);
+  };
+
   const selectMatch = useCallback(
     (match: Match, teamsData: Team[] = teams) => {
       setSelectedMatch(match);
@@ -68,7 +176,10 @@ const App: React.FC = () => {
       // Update sporting position
       if (match.homeTeam === "Sporting" || match.homeTeam === "Sporting CP") {
         setWhereSportingPlays(1);
-      } else if (match.awayTeam === "Sporting" || match.awayTeam === "Sporting CP") {
+      } else if (
+        match.awayTeam === "Sporting" ||
+        match.awayTeam === "Sporting CP"
+      ) {
         setWhereSportingPlays(2);
       }
 
@@ -201,11 +312,39 @@ const App: React.FC = () => {
 
   return (
     <div className="main-container">
-      <div className="backgroundImg">
-        <div className="background-tooltips">
-          <Tooltip icon="upload" text="MUDAR FUNDO" onClick={() => {}} />
-          <Tooltip icon="capture" text="CAPTURAR IMAGEM" onClick={() => {}} />
-        </div>
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        accept="image/*"
+        style={{ display: "none" }}
+      />
+      <div
+        className="backgroundImg"
+        style={
+          backgroundImage
+            ? {
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: "auto 125vh",
+                backgroundPosition: "center center",
+              }
+            : undefined
+        }
+      >
+        {!hideTooltips && (
+          <div className="background-tooltips">
+            <Tooltip
+              icon="upload"
+              text="MUDAR FUNDO"
+              onClick={handleBackgroundUpload}
+            />
+            <Tooltip
+              icon="capture"
+              text="CAPTURAR IMAGEM"
+              onClick={handleCaptureImage}
+            />
+          </div>
+        )}
         {((homeTeam?.name === "Sporting CP" &&
           (awayTeam?.name === "Benfica" || awayTeam?.name === "FC Porto")) ||
           (awayTeam?.name === "Sporting CP" &&
@@ -270,10 +409,7 @@ const App: React.FC = () => {
             variant="contentEditable"
             className="stadium-text"
           />
-          <EditableText
-            value="VEM ASSISTIR NO NÚCLEO"
-            variant="sandwiched"
-          />
+          <EditableText value="VEM ASSISTIR NO NÚCLEO" variant="sandwiched" />
         </div>
       </div>
       <Modal
@@ -308,6 +444,21 @@ const App: React.FC = () => {
             onClick={handleRefreshQuote}
           />
         </div>
+      )}
+      {showFlash && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "white",
+            zIndex: 10000,
+            animation: "flash 0.3s ease-out",
+            pointerEvents: "none",
+          }}
+        />
       )}
     </div>
   );

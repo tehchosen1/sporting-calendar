@@ -79,7 +79,7 @@ html {
 .backgroundImg {
   background: url("../public/estadio-alvalade.jpg") rgba(76, 175, 80, 0.3)
     no-repeat center center;
-  background-size: 220vh;
+  background-size: auto 125vh;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -250,6 +250,18 @@ html {
   }
 }
 
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .skeleton_match {
   background-color: rgba(11, 112, 74, 0.5);
   display: grid;
@@ -331,6 +343,7 @@ html {
   font-size: 22px;
   font-family: "DIN Web W07 Cond Bold";
   filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+  text-align: left;
 }
 
 /* Team versus display moved to TeamVersusDisplay component */
@@ -385,5 +398,127 @@ html {
 @media (max-width: 560px) {
   .footer-tooltip-wrapper {
     bottom: 100px;
+  }
+}
+
+/* Mobile Responsive Styles */
+/* Tablet and smaller devices */
+@media (max-width: 767px) {
+  .container {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .content-container {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .dropdown-container {
+    width: 100%;
+    padding: 0 20px;
+    gap: 20px;
+  }
+
+  .backgroundImg {
+    background-size: auto 125vh;
+  }
+
+  .gyokeres-left,
+  .gyokeres-right {
+    background-size: 60vh;
+  }
+
+  .foe-left,
+  .foe-right {
+    background-size: 60vh;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .content-container {
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .dropdown-container {
+    width: 100%;
+    padding: 0 15px;
+    gap: 15px;
+  }
+
+  .league-name {
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+
+  .backgroundImg {
+    background-size: auto 125vh;
+  }
+
+  .gyokeres-left {
+    left: -380px;
+    background-size: 50vh;
+  }
+
+  .gyokeres-right {
+    right: -480px;
+    background-size: 50vh;
+  }
+
+  .foe-left {
+    left: -480px;
+    background-size: 50vh;
+  }
+
+  .foe-right {
+    left: 380px;
+    background-size: 50vh;
+  }
+
+  .logo-container {
+    gap: 20px;
+    margin: 15px 0;
+  }
+
+  .background-tooltips {
+    top: 10px;
+    gap: 10px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 375px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  .content-container {
+    padding: 0 10px;
+  }
+
+  .dropdown-container {
+    padding: 0 10px;
+    gap: 10px;
+  }
+
+  .backgroundImg {
+    background-size: auto 125vh;
+  }
+
+  .league-name {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .logo-container {
+    gap: 15px;
+    margin: 10px 0;
   }
 }

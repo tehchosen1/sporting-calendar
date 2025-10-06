@@ -76,3 +76,83 @@
     drop-shadow(0 0 20px rgb(0, 100, 255));
   box-sizing: border-box;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 767px) {
+  .taca-liga {
+    width: 350px;
+    height: 700px;
+  }
+
+  .taca-portugal {
+    width: 350px;
+    height: 350px;
+  }
+
+  .liga-campeoes {
+    width: 850px;
+    height: 850px;
+  }
+}
+
+@media (max-width: 480px) {
+  .taca-liga {
+    width: 280px;
+    height: 560px;
+    opacity: 0.6;
+  }
+
+  .taca-portugal {
+    width: 280px;
+    height: 280px;
+    opacity: 0.4;
+  }
+
+  .liga-campeoes {
+    width: 700px;
+    height: 700px;
+    opacity: 0.6;
+  }
+
+  .blue {
+    filter: blur(20px);
+  }
+
+  .liga-campeoes-logo {
+    filter: brightness(1) saturate(0) drop-shadow(0px 0px 1px rgb(255, 255, 255))
+      drop-shadow(0px 0px 1px rgb(255, 255, 255))
+      drop-shadow(0 0 60px rgb(0, 100, 255))
+      drop-shadow(0 0 15px rgb(0, 100, 255));
+  }
+}
+
+@media (max-width: 375px) {
+  .taca-liga {
+    width: 240px;
+    height: 480px;
+    opacity: 0.5;
+  }
+
+  .taca-portugal {
+    width: 240px;
+    height: 240px;
+    opacity: 0.35;
+  }
+
+  .liga-campeoes {
+    width: 600px;
+    height: 600px;
+    opacity: 0.5;
+    left: 10%;
+  }
+
+  .blue {
+    filter: blur(15px);
+  }
+
+  .liga-campeoes-logo {
+    filter: brightness(1) saturate(0) drop-shadow(0px 0px 1px rgb(255, 255, 255))
+      drop-shadow(0 0 50px rgb(0, 100, 255))
+      drop-shadow(0 0 12px rgb(0, 100, 255));
+  }
+}

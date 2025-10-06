@@ -16,3 +16,25 @@
 .away-logo {
   background-image: url("../../../../public/nacional.png");
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 767px) {
+  .team-logo {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-logo {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 375px) {
+  .team-logo {
+    width: 85px;
+    height: 85px;
+  }
+}

@@ -61,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@types/dom-to-image": "^2.6.7",
     "@types/fs-extra": "^11.0.4",
     "@types/webpack-env": "^1.18.5",
     "node-gyp": "^10.2.0"

@@ -16,12 +16,12 @@ axios
     const matches = [];
 
     // First, find and add Sporting's logo from the page
-    let sportingLogo = "https://www.zerozero.pt/img/logos/equipas/16_imgbank.png";
+    let sportingLogo = "https://cdn-img.zerozero.pt/img/logos/equipas/16_imgbank.png";
     $("img").each((_, elem) => {
       const alt = $(elem).attr("alt");
       const src = $(elem).attr("src");
       if (alt && alt.toLowerCase().includes("sporting") && src && src.includes("/img/logos/equipas/16_imgbank")) {
-        sportingLogo = src.startsWith("http") ? src : `https://www.zerozero.pt${src}`;
+        sportingLogo = src.startsWith("http") ? src : `https://cdn-img.zerozero.pt${src}`;
       }
     });
 
@@ -57,9 +57,13 @@ axios
       const opponentName = opponentImgElem.attr("alt");
       let opponentLogo = opponentImgElem.attr("src");
 
-      // Convert small icon to high-quality image by removing "_icon" from path
+      // Convert small icon to high-quality CDN image
       if (opponentLogo && opponentLogo.includes("/img_icon/")) {
         opponentLogo = opponentLogo.replace("/img_icon/", "/img/");
+      }
+      // Use the _imgbank version for higher quality (same as Sporting's logo)
+      if (opponentLogo && opponentLogo.includes(".png") && !opponentLogo.includes("_imgbank")) {
+        opponentLogo = opponentLogo.replace(".png", "_imgbank.png");
       }
 
       // TD 6 has the result - also contains the match page link
@@ -86,7 +90,7 @@ axios
         if (!existingTeam) {
           teams.push({
             name: opponentName,
-            logo: `https://www.zerozero.pt${opponentLogo}`,
+            logo: `https://cdn-img.zerozero.pt${opponentLogo}`,
           });
         }
       }
@@ -201,7 +205,7 @@ axios
 
     // Save teams data to teams.json
     try {
-      const teamsPath = path.join(__dirname, "../public/teams.json");
+      const teamsPath = path.join(__dirname, "public/teams.json");
       await fs.writeFile(teamsPath, JSON.stringify(teams, null, 2), "utf8");
       console.log("Teams data saved to teams.json");
     } catch (error) {
@@ -210,7 +214,7 @@ axios
 
     // Save matches data to matches.json
     try {
-      const matchesPath = path.join(__dirname, "../public/matches.json");
+      const matchesPath = path.join(__dirname, "public/matches.json");
       await fs.writeFile(
         matchesPath,
         JSON.stringify(matches, null, 2),
