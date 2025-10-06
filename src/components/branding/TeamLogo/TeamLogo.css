@@ -1,0 +1,18 @@
+.team-logo {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  width: 140px;
+  height: 140px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+  position: relative;
+  z-index: 1;
+}
+
+.home-logo {
+  background-image: url("../../../../public/sporting.png");
+}
+
+.away-logo {
+  background-image: url("../../../../public/nacional.png");
+}

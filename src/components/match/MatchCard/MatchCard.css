@@ -1,0 +1,132 @@
+.match-item {
+  padding: 0;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 130, 88, 0.5) 0%,
+    rgba(5, 60, 42, 0.65) 100%
+  );
+  border: 2px solid rgba(11, 112, 74, 0.4);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  min-height: 140px;
+  overflow: hidden;
+}
+
+.match-item:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(11, 112, 74, 0.5) 0%,
+    rgba(11, 112, 74, 0.75) 100%
+  );
+  border-color: rgba(11, 112, 74, 0.7);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(11, 112, 74, 0.4),
+    0 0 35px rgba(11, 112, 74, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15);
+}
+
+.match-item.selected {
+  background: linear-gradient(
+    135deg,
+    rgba(11, 112, 74, 0.85) 0%,
+    rgba(15, 150, 100, 0.95) 100%
+  );
+  border-color: rgba(11, 112, 74, 1);
+  border-width: 3px;
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(11, 112, 74, 0.7),
+    0 0 40px rgba(11, 112, 74, 0.5), 0 0 60px rgba(11, 112, 74, 0.3),
+    inset 0 1px 3px rgba(255, 255, 255, 0.3);
+  z-index: 10;
+}
+
+.match-item-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+}
+
+.match-day {
+  font-family: "DIN Web W07 Cond Black";
+  font-size: 34px;
+  color: white;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+  line-height: 1;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  background: rgba(11, 112, 74, 0.8);
+}
+
+.match-time {
+  font-family: "DIN Web W07 Cond Bold";
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 60px;
+  background: rgba(2, 30, 20, 0.9);
+}
+
+.match-versus {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+  padding: 0 14px;
+}
+
+.match-home,
+.match-away {
+  font-family: "DIN Web W07 Cond Bold";
+  font-size: 15px;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  line-height: 1.2;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vs-divider {
+  font-family: "DIN Web W07 Cond";
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.match-league-name {
+  font-family: "DIN Web W07 Cond";
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 2.6em;
+  padding: 0 14px 12px 14px;
+}

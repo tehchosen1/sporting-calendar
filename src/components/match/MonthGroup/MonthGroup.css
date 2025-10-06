@@ -1,0 +1,18 @@
+.month-group {
+  margin-bottom: 30px;
+}
+
+.month-divider {
+  font-family: "DIN Web W07 Cond Bold";
+  font-size: 26px;
+  color: white;
+  padding: 10px 0;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}

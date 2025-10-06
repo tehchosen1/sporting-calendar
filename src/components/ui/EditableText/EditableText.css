@@ -1,0 +1,49 @@
+.editable-text {
+  background: transparent;
+  border: 0px;
+  color: white;
+}
+
+.league-text {
+  width: 100%;
+  font-family: "DIN Web W07 Cond Bold";
+  font-size: 22px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.date-text {
+  text-align: center;
+  font-family: "DIN Web W07 Cond Bold";
+  font-size: 45px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.centered-text {
+  text-align: center;
+  font-family: "DIN Web W07 Cond Bold";
+  margin: 10px 0;
+}
+
+.stadium-text {
+  font-size: 30px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.sandwiched-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+  font-family: "kenyan coffee rg";
+  font-size: 25px;
+}
+
+.sandwiched-text::before,
+.sandwiched-text::after {
+  content: "";
+  flex: 1;
+  height: 5px;
+  background: white;
+  margin: 0 20px;
+}

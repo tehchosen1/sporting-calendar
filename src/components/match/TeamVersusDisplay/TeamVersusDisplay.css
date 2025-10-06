@@ -1,0 +1,40 @@
+.team-names-container {
+  margin: 10px 0;
+}
+
+.team-top-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.team-versus-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sporting-label {
+  background: url("../../../../public/sporting_label-01.png") no-repeat center center;
+  background-size: contain;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+  width: 100%;
+  height: 120px;
+  margin: 0px 0;
+}
+
+.generic-label {
+  font-family: "DIN Web W07 Cond Black";
+  font-size: 40px;
+  display: inline-block;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+.vs {
+  font-family: "DIN Web W07 Cond";
+  font-size: 40px;
+  display: inline-block;
+  margin: 0 5px;
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}

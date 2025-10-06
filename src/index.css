@@ -1,13 +1,389 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Global styles */
+
+@font-face {
+  font-family: "DIN Web W07 Cond Black";
+  src: local("DIN Web W07 Cond Black"),
+    url(../public/DIN\ Web\ W07\ Cond\ Black.ttf) format("woff");
+}
+@font-face {
+  font-family: "DIN Web W07 Cond Bold";
+  src: local("DIN Web W07 Cond Bold"),
+    url(../public/DIN\ Web\ W07\ Cond\ Bold.ttf) format("woff");
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+@font-face {
+  font-family: "DIN Web W07 Cond";
+  src: local("DIN Web W07 Cond"),
+    url(../public/DIN\ Web\ W07\ Cond.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "DIN Web W07 Black";
+  src: local("DIN Web W07 Black"),
+    url(../public/DIN\ Web\ W07\ Black.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "DIN Web W07 Italic";
+  src: local("DIN Web W07 Italic"),
+    url(../public/DIN\ Web\ W07\ Italic.ttf) format("woff");
+}
+
+@font-face {
+  font-family: "kenyan coffee rg";
+  src: local("kenyan coffee rg"),
+    url(../public/kenyan\ coffee\ rg.otf) format("woff");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css";
+body,
+html {
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  background-color: rgba(0, 0, 0, 1);
+  overflow-y: hidden;
+}
+
+.App {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: multiply;
+  margin: 0 auto;
+  z-index: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: black;
+}
+
+.main-container {
+  margin: 0 auto;
+  z-index: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.footer {
+  margin-bottom: 50px;
+}
+
+.backgroundImg {
+  background: url("../public/estadio-alvalade.jpg") rgba(76, 175, 80, 0.3)
+    no-repeat center center;
+  background-size: 220vh;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.background-tooltips {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 5;
+}
+
+.background-tooltips .hover-tooltip {
+  position: relative;
+  opacity: 0;
+  left: 0;
+  top: 0;
+  transform: none;
+  transition: opacity 0.3s ease, background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backgroundImg:hover .background-tooltips .hover-tooltip {
+  opacity: 1;
+}
+
+.background-tooltips .tooltip-clickable:hover {
+  transform: none;
+}
+
+.hover-tooltip.background-tooltip {
+  top: 20px;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.backgroundImg:hover .hover-tooltip {
+  opacity: 1;
+}
+
+.gyokeres {
+  background: url("../public/gyokeres.png") rgba(76, 175, 80, 0) no-repeat
+    center center;
+  z-index: 4;
+}
+
+.foe-1 {
+  background: url("../public/di_maria.png") rgba(76, 175, 80, 0) no-repeat
+    center center;
+  z-index: 3;
+}
+
+.foe-2 {
+  background: url("../public/samu.png") rgba(76, 175, 80, 0) no-repeat center
+    center;
+  z-index: 3;
+}
+
+.gyokeres-left {
+  background-size: 70vh;
+  position: absolute;
+  top: 0;
+  left: -340px;
+  right: 0;
+  bottom: -80px;
+}
+
+.gyokeres-right {
+  background-size: 70vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: -440px;
+  bottom: -80px;
+}
+
+.foe-left {
+  background-size: 70vh;
+  position: absolute;
+  top: 0;
+  left: -440px;
+  right: 0;
+  bottom: -80px;
+}
+
+.foe-right {
+  background-size: 70vh;
+  position: absolute;
+  top: 0;
+  left: 340px;
+  right: 0;
+  bottom: -80px;
+}
+
+.background-tint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(11, 112, 74, 0.5);
+  z-index: 1; /* Ensure it's above the background */
+}
+.background-tint-black {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  z-index: 2;
+}
+.background-special {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("../public/amorim.png") no-repeat bottom center;
+  opacity: 0.7;
+  background-size: 110%;
+  z-index: 2;
+}
+
+.special-text {
+  text-shadow: rgba(0, 0, 0, 1) 2px 2px 10px, rgba(0, 0, 0, 1) 2px 2px 10px,
+    rgba(0, 0, 0, 1) 2px 2px 10px;
+  margin-top: -5%;
+  margin-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.content {
+  word-break: break-all;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
+  margin: auto;
+  min-height: 100dvh; /* Updated for full viewport height */
+  background-color: black;
+  overflow: hidden;
+  /* width: 560px; */
+}
+
+.container {
+  margin: auto;
+  min-height: 100dvh; /* Updated for full viewport height */
+  width: 560px;
+  background-color: black;
+}
+
+@keyframes react-loading-skeleton {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton_match {
+  background-color: rgba(11, 112, 74, 0.5);
+  display: grid;
+  grid-template-columns: 1fr 7fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
+  overflow: hidden;
+}
+
+.skeleton_match::after {
+  content: " ";
+  display: grid;
+  width: 100dvw;
+  height: 100dvh;
+  grid-template-columns: 1fr 7fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  text-shadow: rgba(0, 0, 0, 0.25) 2px 3px 0px;
+  background-image: linear-gradient(
+    90deg,
+    rgba(11, 112, 74, 0),
+    rgba(33, 180, 107, 1),
+    rgba(11, 112, 74, 0)
+  );
+  transform: translateX(-100%);
+
+  animation-name: react-loading-skeleton;
+  animation-direction: normal;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion) {
+  .react-loading-skeleton {
+    --pseudo-element-display: none; /* Disable animation */
+  }
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* League badges moved to LeagueBadge component */
+
+.main-content {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Team logos moved to TeamLogo component */
+
+.content-container {
+  z-index: 2;
+  width: 560px;
+  text-align: left;
+  color: white;
+}
+
+.dropdown-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+  z-index: 2;
+  width: 560px;
+  text-align: left;
+  color: white;
+}
+
+.league-name {
+  margin-left: 12%;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-family: "DIN Web W07 Cond Bold";
+  filter: drop-shadow(2px 4px 0.5px rgba(0, 0, 0, 0.5));
+}
+
+/* Team versus display moved to TeamVersusDisplay component */
+/* Editable text styles moved to EditableText component */
+
+.match-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+::placeholder {
+  color: white;
+}
+
+.logo-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+/* Tooltip styles moved to Tooltip component */
+/* Keep hover behavior for parent containers */
+.logo-container:hover .hover-tooltip,
+.backgroundImg:hover .hover-tooltip {
+  opacity: 1;
+}
+
+/* Sandwiched text and editable text moved to EditableText component */
+
+/* Modal, MatchCard, and MonthGroup styles moved to their respective component CSS files */
+
+/* Footer tooltip wrapper - renders at app level to blur everything */
+.footer-tooltip-wrapper {
+  position: fixed;
+  left: 50%;
+  bottom: 180px;
+  transform: translateX(-50%);
+  z-index: 10000;
+}
+
+.footer-tooltip-wrapper .hover-tooltip {
+  opacity: 1;
+  position: relative;
+  left: 0;
+  top: 0;
+  transform: none;
+}
+
+@media (max-width: 560px) {
+  .footer-tooltip-wrapper {
+    bottom: 100px;
+  }
 }
